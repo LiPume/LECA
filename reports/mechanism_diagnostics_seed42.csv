@@ -1,0 +1,201 @@
+experiment,layer,metric,value,ci_low,ci_high,n_images,interpretation
+channel_semantics,model.2.eca,spearman_variance_vs_target_focus,-0.20541672938933211,-0.22334906104169797,-0.1876902143233479,146,方差与目标聚焦程度的图像级单调关联
+channel_semantics,model.2.eca,auc_variance_predict_target_focused,0.487685582551376,0.4692718986460513,0.5062189980862678,132,方差单独识别目标聚焦通道的图像级 AUC；0.5近随机
+channel_semantics,model.2.eca,high_variance_target_focused_fraction,0.09272918861959957,0.07534246575342467,0.11169652265542676,146,每张图高方差通道中的目标聚焦比例
+channel_semantics,model.2.eca,high_variance_background_focused_fraction,0.5858798735511065,0.5690068493150684,0.6037934668071655,146,每张图高方差通道中的背景更强比例
+channel_semantics,model.2.eca,spearman_negative_mu_vs_target_focus,0.30731001304631433,0.28624409622911334,0.32709023282653416,146,低均值与目标聚焦程度的图像级单调关联
+channel_semantics,model.2.eca,auc_negative_mu_predict_target_focused,0.6856170893316778,0.6718663257342752,0.6999785891575061,132,低均值单独识别目标聚焦通道的图像级 AUC；0.5近随机
+channel_semantics,model.2.eca,low_mu_target_focused_fraction,0.11749209694415173,0.101159114857745,0.13382507903055846,146,每张图低均值通道中的目标聚焦比例
+channel_semantics,model.2.eca,all_target_focused_fraction,0.09931506849315068,0.08818493150684932,0.11065924657534247,146,每张图全部通道的目标聚焦基准比例
+channel_semantics,model.4.eca,spearman_variance_vs_target_focus,0.12083974032554627,0.09842755733839954,0.14355654384891123,146,方差与目标聚焦程度的图像级单调关联
+channel_semantics,model.4.eca,auc_variance_predict_target_focused,0.6246473381850085,0.6011707837759397,0.6466791886218822,102,方差单独识别目标聚焦通道的图像级 AUC；0.5近随机
+channel_semantics,model.4.eca,high_variance_target_focused_fraction,0.0458377239199157,0.03503688092729188,0.05821917808219178,146,每张图高方差通道中的目标聚焦比例
+channel_semantics,model.4.eca,high_variance_background_focused_fraction,0.4307165437302424,0.4122760800842993,0.4486301369863014,146,每张图高方差通道中的背景更强比例
+channel_semantics,model.4.eca,spearman_negative_mu_vs_target_focus,-0.20200231310187056,-0.22096198107282522,-0.18213702514310692,146,低均值与目标聚焦程度的图像级单调关联
+channel_semantics,model.4.eca,auc_negative_mu_predict_target_focused,0.2666018512226314,0.24965340939442007,0.2831331093693164,102,低均值单独识别目标聚焦通道的图像级 AUC；0.5近随机
+channel_semantics,model.4.eca,low_mu_target_focused_fraction,0.00684931506849315,0.003424657534246575,0.010537407797681772,146,每张图低均值通道中的目标聚焦比例
+channel_semantics,model.4.eca,all_target_focused_fraction,0.03697559931506849,0.031035958904109588,0.04334465967465753,146,每张图全部通道的目标聚焦基准比例
+channel_semantics,model.6.eca,spearman_variance_vs_target_focus,-0.19541677693382464,-0.21235752901803073,-0.1797158474130384,146,方差与目标聚焦程度的图像级单调关联
+channel_semantics,model.6.eca,auc_variance_predict_target_focused,0.5093036138158192,0.49513283295340293,0.5237241274199431,146,方差单独识别目标聚焦通道的图像级 AUC；0.5近随机
+channel_semantics,model.6.eca,high_variance_target_focused_fraction,0.09114857744994732,0.08061116965226553,0.10194942044257112,146,每张图高方差通道中的目标聚焦比例
+channel_semantics,model.6.eca,high_variance_background_focused_fraction,0.6440990516332983,0.6269757639620653,0.6622760800842992,146,每张图高方差通道中的背景更强比例
+channel_semantics,model.6.eca,spearman_negative_mu_vs_target_focus,0.2264107193474024,0.2141187548679553,0.23897278381825796,146,低均值与目标聚焦程度的图像级单调关联
+channel_semantics,model.6.eca,auc_negative_mu_predict_target_focused,0.5863971234006556,0.5762456946758833,0.5956186211546443,146,低均值单独识别目标聚焦通道的图像级 AUC；0.5近随机
+channel_semantics,model.6.eca,low_mu_target_focused_fraction,0.09562697576396205,0.08587328767123287,0.10590094836670177,146,每张图低均值通道中的目标聚焦比例
+channel_semantics,model.6.eca,all_target_focused_fraction,0.11429794520547945,0.10691218964041097,0.12173854880136985,146,每张图全部通道的目标聚焦基准比例
+channel_semantics,model.8.eca,spearman_variance_vs_target_focus,-0.25281846004814706,-0.2754582426821626,-0.23023199280695392,141,方差与目标聚焦程度的图像级单调关联
+channel_semantics,model.8.eca,auc_variance_predict_target_focused,0.6077233269364071,0.5940084580377689,0.6215645627548709,141,方差单独识别目标聚焦通道的图像级 AUC；0.5近随机
+channel_semantics,model.8.eca,high_variance_target_focused_fraction,0.1524822695035461,0.14074604473540644,0.16503000545553734,141,每张图高方差通道中的目标聚焦比例
+channel_semantics,model.8.eca,high_variance_background_focused_fraction,0.7220403709765413,0.7074468085106383,0.7360917894162575,141,每张图高方差通道中的背景更强比例
+channel_semantics,model.8.eca,spearman_negative_mu_vs_target_focus,0.23125998329624084,0.21135208985697096,0.25074731681158674,141,低均值与目标聚焦程度的图像级单调关联
+channel_semantics,model.8.eca,auc_negative_mu_predict_target_focused,0.4148234099612463,0.40214444848976766,0.4274381856566858,141,低均值单独识别目标聚焦通道的图像级 AUC；0.5近随机
+channel_semantics,model.8.eca,low_mu_target_focused_fraction,0.05360065466448446,0.047190398254228036,0.0602836879432624,141,每张图低均值通道中的目标聚焦比例
+channel_semantics,model.8.eca,all_target_focused_fraction,0.11192375886524823,0.10685394503546099,0.11680033798758865,141,每张图全部通道的目标聚焦基准比例
+channel_semantics,model.13.eca,spearman_variance_vs_target_focus,-0.21810917013041412,-0.23430100766675527,-0.20190404664269426,146,方差与目标聚焦程度的图像级单调关联
+channel_semantics,model.13.eca,auc_variance_predict_target_focused,0.5913344592205453,0.5644063070115415,0.6183448577756199,115,方差单独识别目标聚焦通道的图像级 AUC；0.5近随机
+channel_semantics,model.13.eca,high_variance_target_focused_fraction,0.012118018967334039,0.00922023182297155,0.01554267650158061,146,每张图高方差通道中的目标聚焦比例
+channel_semantics,model.13.eca,high_variance_background_focused_fraction,0.7410432033719705,0.7223393045310855,0.7579096417281349,146,每张图高方差通道中的背景更强比例
+channel_semantics,model.13.eca,spearman_negative_mu_vs_target_focus,0.20762072529242218,0.1922645867380278,0.2223482714760706,146,低均值与目标聚焦程度的图像级单调关联
+channel_semantics,model.13.eca,auc_negative_mu_predict_target_focused,0.3368856652436798,0.32074964115047744,0.3531590477221288,115,低均值单独识别目标聚焦通道的图像级 AUC；0.5近随机
+channel_semantics,model.13.eca,low_mu_target_focused_fraction,0.0,0.0,0.0,146,每张图低均值通道中的目标聚焦比例
+channel_semantics,model.13.eca,all_target_focused_fraction,0.012735445205479453,0.01113013698630137,0.01444777397260274,146,每张图全部通道的目标聚焦基准比例
+channel_semantics,model.16.eca,spearman_variance_vs_target_focus,-0.17042720407446435,-0.18032727902804957,-0.160170919263385,146,方差与目标聚焦程度的图像级单调关联
+channel_semantics,model.16.eca,auc_variance_predict_target_focused,0.5656310346449235,0.5455602404384612,0.586775397138823,129,方差单独识别目标聚焦通道的图像级 AUC；0.5近随机
+channel_semantics,model.16.eca,high_variance_target_focused_fraction,0.11275026343519495,0.09852476290832457,0.12802950474183353,146,每张图高方差通道中的目标聚焦比例
+channel_semantics,model.16.eca,high_variance_background_focused_fraction,0.4594309799789252,0.4383561643835616,0.47997892518440455,146,每张图高方差通道中的背景更强比例
+channel_semantics,model.16.eca,spearman_negative_mu_vs_target_focus,0.2857169776719542,0.2745713122496747,0.2972123852175222,146,低均值与目标聚焦程度的图像级单调关联
+channel_semantics,model.16.eca,auc_negative_mu_predict_target_focused,0.6007901706210516,0.5854622304212833,0.6154329236710192,129,低均值单独识别目标聚焦通道的图像级 AUC；0.5近随机
+channel_semantics,model.16.eca,low_mu_target_focused_fraction,0.07060063224446786,0.05742887249736565,0.08482613277133826,146,每张图低均值通道中的目标聚焦比例
+channel_semantics,model.16.eca,all_target_focused_fraction,0.08668664383561644,0.0759845890410959,0.0974957191780822,146,每张图全部通道的目标聚焦基准比例
+channel_semantics,model.19.eca,spearman_variance_vs_target_focus,-0.11655754660067778,-0.13050298050560263,-0.10362111892265956,146,方差与目标聚焦程度的图像级单调关联
+channel_semantics,model.19.eca,auc_variance_predict_target_focused,0.6736614256833379,0.6640862065971666,0.6829915021334703,145,方差单独识别目标聚焦通道的图像级 AUC；0.5近随机
+channel_semantics,model.19.eca,high_variance_target_focused_fraction,0.17781875658587987,0.1649104320337197,0.19099051633298209,146,每张图高方差通道中的目标聚焦比例
+channel_semantics,model.19.eca,high_variance_background_focused_fraction,0.48024236037934664,0.46522655426765014,0.4957850368809273,146,每张图高方差通道中的背景更强比例
+channel_semantics,model.19.eca,spearman_negative_mu_vs_target_focus,0.08291088208291422,0.07072748241421736,0.09583051002375499,146,低均值与目标聚焦程度的图像级单调关联
+channel_semantics,model.19.eca,auc_negative_mu_predict_target_focused,0.39442549257936765,0.3833163869647138,0.4060624308715961,145,低均值单独识别目标聚焦通道的图像级 AUC；0.5近随机
+channel_semantics,model.19.eca,low_mu_target_focused_fraction,0.031875658587987354,0.026870389884088516,0.0368809272918862,146,每张图低均值通道中的目标聚焦比例
+channel_semantics,model.19.eca,all_target_focused_fraction,0.1171875,0.11076492936643836,0.12323683647260272,146,每张图全部通道的目标聚焦基准比例
+channel_semantics,model.22.eca,spearman_variance_vs_target_focus,-0.36477688227023053,-0.3818260499966633,-0.3474599437362898,141,方差与目标聚焦程度的图像级单调关联
+channel_semantics,model.22.eca,auc_variance_predict_target_focused,0.6960870867780162,0.6796567349755245,0.7121754912412844,139,方差单独识别目标聚焦通道的图像级 AUC；0.5近随机
+channel_semantics,model.22.eca,high_variance_target_focused_fraction,0.04378068739770867,0.03546099290780142,0.05319489907255863,141,每张图高方差通道中的目标聚焦比例
+channel_semantics,model.22.eca,high_variance_background_focused_fraction,0.806873977086743,0.7956867157665029,0.8183340152755045,141,每张图高方差通道中的背景更强比例
+channel_semantics,model.22.eca,spearman_negative_mu_vs_target_focus,0.27374813222148336,0.25544535223581527,0.2927216571261263,141,低均值与目标聚焦程度的图像级单调关联
+channel_semantics,model.22.eca,auc_negative_mu_predict_target_focused,0.23572568595242288,0.22263746679228377,0.24871998623489838,139,低均值单独识别目标聚焦通道的图像级 AUC；0.5近随机
+channel_semantics,model.22.eca,low_mu_target_focused_fraction,0.0001363884342607747,0.0,0.0004091653027823241,141,每张图低均值通道中的目标聚焦比例
+channel_semantics,model.22.eca,all_target_focused_fraction,0.02942154255319149,0.026122700576241133,0.03310616134751773,141,每张图全部通道的目标聚焦基准比例
+brightness,model.2.eca,natural_spearman_gray_vs_corr,0.686086956521739,0.33307052124397724,0.8300574671714618,24,自然样本中像素灰度与深层 corr 的关联
+brightness,model.2.eca,dark_expected_direction_fraction,1.0,1.0,1.0,24,受控光度诊断
+brightness,model.2.eca,bright_expected_direction_fraction,1.0,1.0,1.0,24,受控光度诊断
+brightness,model.2.eca,dark_w_bri_increase_fraction,0.0,0.0,0.0,24,受控光度诊断
+brightness,model.2.eca,bright_w_bri_decrease_fraction,0.0,0.0,0.0,24,受控光度诊断
+brightness,model.2.eca,mean_abs_corr_change_global_dark,0.004344681898752849,0.003490802242110173,0.005166217250128586,24,受控光度诊断
+brightness,model.2.eca,mean_abs_corr_change_radial_equal_mean,0.0005072839558124542,0.00038409121334552764,0.0006603049424787361,24,受控光度诊断
+brightness,model.2.eca,mean_abs_corr_change_linear_equal_mean,0.0005356048544247946,0.00036048172041773795,0.0007100604164103666,24,受控光度诊断
+brightness,model.2.eca,mean_abs_corr_change_local_highlight_equal_mean,0.00014758234222730002,0.00010488800083597501,0.0001981965887049834,24,受控光度诊断
+brightness,model.2.eca,local_highlight_variance_increase_fraction,0.7916666666666666,0.625,0.9583333333333334,24,受控光度诊断
+brightness,model.2.eca,local_highlight_w_sup_decrease_fraction,0.7916666666666666,0.625,0.9583333333333334,24,受控光度诊断
+brightness,model.2.eca,mean_local_highlight_variance_change,0.008744339148203531,0.004760658803085486,0.012657194087902699,24,受控光度诊断
+brightness,model.2.eca,mean_local_highlight_w_sup_change,-0.00033247222503026325,-0.00048297432561715444,-0.00018119495362043395,24,受控光度诊断
+brightness,model.2.eca,equal_mean_gray_error,4.044910895594407e-06,1.3583750865691746e-06,8.182711326659437e-06,72,受控光度诊断
+learned_scalar,model.2.eca,learned_alpha,0.0017871856689453125,0.0017871856689453125,0.0017871856689453125,24,训练后标量；符号决定该层校准方向
+learned_scalar,model.2.eca,learned_beta,0.057098388671875,0.057098388671875,0.057098388671875,24,训练后标量；符号决定该层校准方向
+learned_scalar,model.2.eca,learned_gamma,-0.010223388671875,-0.010223388671875,-0.010223388671875,24,训练后标量；符号决定该层校准方向
+brightness,model.4.eca,natural_spearman_gray_vs_corr,-0.6982608695652174,-0.7975679228746714,-0.4602456476777465,24,自然样本中像素灰度与深层 corr 的关联
+brightness,model.4.eca,dark_expected_direction_fraction,1.0,1.0,1.0,24,受控光度诊断
+brightness,model.4.eca,bright_expected_direction_fraction,1.0,1.0,1.0,24,受控光度诊断
+brightness,model.4.eca,dark_w_bri_increase_fraction,1.0,1.0,1.0,24,受控光度诊断
+brightness,model.4.eca,bright_w_bri_decrease_fraction,1.0,1.0,1.0,24,受控光度诊断
+brightness,model.4.eca,mean_abs_corr_change_global_dark,0.0005862563848495483,0.00048016700893640515,0.0007002718746662138,24,受控光度诊断
+brightness,model.4.eca,mean_abs_corr_change_radial_equal_mean,0.00011785328388214111,8.758126447598139e-05,0.00015153661370277398,24,受控光度诊断
+brightness,model.4.eca,mean_abs_corr_change_linear_equal_mean,5.438427130381266e-05,3.2362776497999823e-05,7.643184314171473e-05,24,受控光度诊断
+brightness,model.4.eca,mean_abs_corr_change_local_highlight_equal_mean,3.815690676371256e-05,2.858247607946396e-05,4.821314165989558e-05,24,受控光度诊断
+brightness,model.4.eca,local_highlight_variance_increase_fraction,0.7083333333333334,0.5416666666666666,0.875,24,受控光度诊断
+brightness,model.4.eca,local_highlight_w_sup_decrease_fraction,0.7083333333333334,0.5416666666666666,0.875,24,受控光度诊断
+brightness,model.4.eca,mean_local_highlight_variance_change,9.994332989056905e-05,-2.1800631657242756e-06,0.0001944903361921509,24,受控光度诊断
+brightness,model.4.eca,mean_local_highlight_w_sup_change,-1.6142924626668295e-07,-3.1795352697372434e-07,4.967053731282552e-09,24,受控光度诊断
+brightness,model.4.eca,equal_mean_gray_error,4.044910895594407e-06,1.3583750865691746e-06,8.182711326659437e-06,72,受控光度诊断
+learned_scalar,model.4.eca,learned_alpha,0.059234619140625,0.059234619140625,0.059234619140625,24,训练后标量；符号决定该层校准方向
+learned_scalar,model.4.eca,learned_beta,0.0032482147216796875,0.0032482147216796875,0.0032482147216796875,24,训练后标量；符号决定该层校准方向
+learned_scalar,model.4.eca,learned_gamma,0.04840087890625,0.04840087890625,0.04840087890625,24,训练后标量；符号决定该层校准方向
+brightness,model.6.eca,natural_spearman_gray_vs_corr,-0.3008695652173913,-0.5773227460730417,0.07085367626418548,24,自然样本中像素灰度与深层 corr 的关联
+brightness,model.6.eca,dark_expected_direction_fraction,0.9166666666666666,0.7916666666666666,1.0,24,受控光度诊断
+brightness,model.6.eca,bright_expected_direction_fraction,0.9166666666666666,0.7916666666666666,1.0,24,受控光度诊断
+brightness,model.6.eca,dark_w_bri_increase_fraction,0.9166666666666666,0.7916666666666666,1.0,24,受控光度诊断
+brightness,model.6.eca,bright_w_bri_decrease_fraction,0.9166666666666666,0.7916666666666666,1.0,24,受控光度诊断
+brightness,model.6.eca,mean_abs_corr_change_global_dark,0.0007506472369035085,0.0005023808839420478,0.0010148626131316026,24,受控光度诊断
+brightness,model.6.eca,mean_abs_corr_change_radial_equal_mean,0.00011893485983212788,8.308241764704386e-05,0.00016090298692385355,24,受控光度诊断
+brightness,model.6.eca,mean_abs_corr_change_linear_equal_mean,0.00013949225346247354,9.804461151361466e-05,0.00018581226468086242,24,受控光度诊断
+brightness,model.6.eca,mean_abs_corr_change_local_highlight_equal_mean,0.000127955029408137,0.00010071427871783574,0.00015509047855933507,24,受控光度诊断
+brightness,model.6.eca,local_highlight_variance_increase_fraction,0.6666666666666666,0.5,0.8333333333333334,24,受控光度诊断
+brightness,model.6.eca,local_highlight_w_sup_decrease_fraction,0.3333333333333333,0.16666666666666666,0.5,24,受控光度诊断
+brightness,model.6.eca,mean_local_highlight_variance_change,0.00022736905763546625,-9.613502770662307e-05,0.0005358337502305706,24,受控光度诊断
+brightness,model.6.eca,mean_local_highlight_w_sup_change,1.2715657552083333e-06,-8.097539345423381e-07,3.248453140258789e-06,24,受控光度诊断
+brightness,model.6.eca,equal_mean_gray_error,4.044910895594407e-06,1.3583750865691746e-06,8.182711326659437e-06,72,受控光度诊断
+learned_scalar,model.6.eca,learned_alpha,0.06927490234375,0.06927490234375,0.06927490234375,24,训练后标量；符号决定该层校准方向
+learned_scalar,model.6.eca,learned_beta,-0.0113067626953125,-0.0113067626953125,-0.0113067626953125,24,训练后标量；符号决定该层校准方向
+learned_scalar,model.6.eca,learned_gamma,0.06182861328125,0.06182861328125,0.06182861328125,24,训练后标量；符号决定该层校准方向
+brightness,model.8.eca,natural_spearman_gray_vs_corr,-0.4765217391304347,-0.7527331494273926,-0.10095644052980961,24,自然样本中像素灰度与深层 corr 的关联
+brightness,model.8.eca,dark_expected_direction_fraction,0.875,0.75,1.0,24,受控光度诊断
+brightness,model.8.eca,bright_expected_direction_fraction,0.7916666666666666,0.625,0.9583333333333334,24,受控光度诊断
+brightness,model.8.eca,dark_w_bri_increase_fraction,0.875,0.75,1.0,24,受控光度诊断
+brightness,model.8.eca,bright_w_bri_decrease_fraction,0.7916666666666666,0.625,0.9583333333333334,24,受控光度诊断
+brightness,model.8.eca,mean_abs_corr_change_global_dark,0.0019502279659112294,0.0015840635014077028,0.0023285767684380213,24,受控光度诊断
+brightness,model.8.eca,mean_abs_corr_change_radial_equal_mean,0.00045647968848546344,0.00030857964108387627,0.0006268036551773545,24,受控光度诊断
+brightness,model.8.eca,mean_abs_corr_change_linear_equal_mean,0.00036590173840522766,0.00021568117663264274,0.0005434903937081492,24,受控光度诊断
+brightness,model.8.eca,mean_abs_corr_change_local_highlight_equal_mean,0.0003020452956358592,0.00019966131076216696,0.00042057825873295467,24,受控光度诊断
+brightness,model.8.eca,local_highlight_variance_increase_fraction,0.6666666666666666,0.4583333333333333,0.8333333333333334,24,受控光度诊断
+brightness,model.8.eca,local_highlight_w_sup_decrease_fraction,0.6666666666666666,0.4583333333333333,0.8333333333333334,24,受控光度诊断
+brightness,model.8.eca,mean_local_highlight_variance_change,0.001159502814213435,-0.00018363365282615026,0.0026439330230156577,24,受控光度诊断
+brightness,model.8.eca,mean_local_highlight_w_sup_change,-3.936390082041422e-05,-9.300907452901205e-05,9.220900634924518e-06,24,受控光度诊断
+brightness,model.8.eca,equal_mean_gray_error,4.044910895594407e-06,1.3583750865691746e-06,8.182711326659437e-06,72,受控光度诊断
+learned_scalar,model.8.eca,learned_alpha,-0.00644683837890625,-0.00644683837890625,-0.00644683837890625,24,训练后标量；符号决定该层校准方向
+learned_scalar,model.8.eca,learned_beta,0.067138671875,0.067138671875,0.067138671875,24,训练后标量；符号决定该层校准方向
+learned_scalar,model.8.eca,learned_gamma,0.0408935546875,0.0408935546875,0.0408935546875,24,训练后标量；符号决定该层校准方向
+brightness,model.13.eca,natural_spearman_gray_vs_corr,-0.6382608695652173,-0.8123124400590507,-0.26984438554490076,24,自然样本中像素灰度与深层 corr 的关联
+brightness,model.13.eca,dark_expected_direction_fraction,0.7916666666666666,0.625,0.9166666666666666,24,受控光度诊断
+brightness,model.13.eca,bright_expected_direction_fraction,0.5833333333333334,0.375,0.7916666666666666,24,受控光度诊断
+brightness,model.13.eca,dark_w_bri_increase_fraction,0.20833333333333334,0.08333333333333333,0.375,24,受控光度诊断
+brightness,model.13.eca,bright_w_bri_decrease_fraction,0.4166666666666667,0.20833333333333334,0.625,24,受控光度诊断
+brightness,model.13.eca,mean_abs_corr_change_global_dark,0.001128292332092921,0.0007677191868424416,0.001469802049299081,24,受控光度诊断
+brightness,model.13.eca,mean_abs_corr_change_radial_equal_mean,0.0003477831681569417,0.00025013812507192293,0.00046443032721678416,24,受控光度诊断
+brightness,model.13.eca,mean_abs_corr_change_linear_equal_mean,0.0002769144872824351,0.00020915667215983073,0.00034456122666597365,24,受控光度诊断
+brightness,model.13.eca,mean_abs_corr_change_local_highlight_equal_mean,0.00020651519298553467,0.00010706807176272075,0.00033707109590371437,24,受控光度诊断
+brightness,model.13.eca,local_highlight_variance_increase_fraction,0.5833333333333334,0.375,0.751041666666661,24,受控光度诊断
+brightness,model.13.eca,local_highlight_w_sup_decrease_fraction,0.5833333333333334,0.375,0.751041666666661,24,受控光度诊断
+brightness,model.13.eca,mean_local_highlight_variance_change,1.117695743838946e-05,-0.000300326330276827,0.00032010272067661073,24,受控光度诊断
+brightness,model.13.eca,mean_local_highlight_w_sup_change,-3.3527612686157227e-07,-1.2653072675069173e-05,1.201909035444259e-05,24,受控光度诊断
+brightness,model.13.eca,equal_mean_gray_error,4.044910895594407e-06,1.3583750865691746e-06,8.182711326659437e-06,72,受控光度诊断
+learned_scalar,model.13.eca,learned_alpha,-0.02587890625,-0.02587890625,-0.02587890625,24,训练后标量；符号决定该层校准方向
+learned_scalar,model.13.eca,learned_beta,0.08477783203125,0.08477783203125,0.08477783203125,24,训练后标量；符号决定该层校准方向
+learned_scalar,model.13.eca,learned_gamma,-0.0335693359375,-0.0335693359375,-0.0335693359375,24,训练后标量；符号决定该层校准方向
+brightness,model.16.eca,natural_spearman_gray_vs_corr,-0.6782608695652173,-0.8108820948315174,-0.34762151021194587,24,自然样本中像素灰度与深层 corr 的关联
+brightness,model.16.eca,dark_expected_direction_fraction,1.0,1.0,1.0,24,受控光度诊断
+brightness,model.16.eca,bright_expected_direction_fraction,0.9583333333333334,0.875,1.0,24,受控光度诊断
+brightness,model.16.eca,dark_w_bri_increase_fraction,0.0,0.0,0.0,24,受控光度诊断
+brightness,model.16.eca,bright_w_bri_decrease_fraction,0.041666666666666664,0.0,0.125,24,受控光度诊断
+brightness,model.16.eca,mean_abs_corr_change_global_dark,0.0009244059522946676,0.0006780876778066158,0.001190613551686207,24,受控光度诊断
+brightness,model.16.eca,mean_abs_corr_change_radial_equal_mean,0.00014214590191841125,9.661087145407994e-05,0.00019314559176564217,24,受控光度诊断
+brightness,model.16.eca,mean_abs_corr_change_linear_equal_mean,9.58852469921112e-05,7.036194826165835e-05,0.00012532637144128473,24,受控光度诊断
+brightness,model.16.eca,mean_abs_corr_change_local_highlight_equal_mean,9.217113256454468e-05,5.118266368905703e-05,0.00014433981850743292,24,受控光度诊断
+brightness,model.16.eca,local_highlight_variance_increase_fraction,0.25,0.08333333333333333,0.4166666666666667,24,受控光度诊断
+brightness,model.16.eca,local_highlight_w_sup_decrease_fraction,0.25,0.08333333333333333,0.4166666666666667,24,受控光度诊断
+brightness,model.16.eca,mean_local_highlight_variance_change,-0.00017743899176518121,-0.0004279865107188622,7.91302106032768e-05,24,受控光度诊断
+brightness,model.16.eca,mean_local_highlight_w_sup_change,5.411605040232341e-06,-2.450371781984965e-06,1.3123390575249986e-05,24,受控光度诊断
+brightness,model.16.eca,equal_mean_gray_error,4.044910895594407e-06,1.3583750865691746e-06,8.182711326659437e-06,72,受控光度诊断
+learned_scalar,model.16.eca,learned_alpha,-0.03924560546875,-0.03924560546875,-0.03924560546875,24,训练后标量；符号决定该层校准方向
+learned_scalar,model.16.eca,learned_beta,0.061859130859375,0.061859130859375,0.061859130859375,24,训练后标量；符号决定该层校准方向
+learned_scalar,model.16.eca,learned_gamma,-0.019805908203125,-0.019805908203125,-0.019805908203125,24,训练后标量；符号决定该层校准方向
+brightness,model.19.eca,natural_spearman_gray_vs_corr,-0.7695652173913042,-0.9012259329098848,-0.47516773470552026,24,自然样本中像素灰度与深层 corr 的关联
+brightness,model.19.eca,dark_expected_direction_fraction,0.8333333333333334,0.6666666666666666,0.9583333333333334,24,受控光度诊断
+brightness,model.19.eca,bright_expected_direction_fraction,0.4583333333333333,0.25,0.6666666666666666,24,受控光度诊断
+brightness,model.19.eca,dark_w_bri_increase_fraction,0.8333333333333334,0.6666666666666666,0.9583333333333334,24,受控光度诊断
+brightness,model.19.eca,bright_w_bri_decrease_fraction,0.4583333333333333,0.25,0.6666666666666666,24,受控光度诊断
+brightness,model.19.eca,mean_abs_corr_change_global_dark,0.0008707481125990549,0.0006322789937257767,0.001110929405937592,24,受控光度诊断
+brightness,model.19.eca,mean_abs_corr_change_radial_equal_mean,0.0002534116307894389,0.00018891651804248493,0.000326267909258604,24,受控光度诊断
+brightness,model.19.eca,mean_abs_corr_change_linear_equal_mean,0.0001581000785032908,9.542511155207952e-05,0.00022678875053922326,24,受控光度诊断
+brightness,model.19.eca,mean_abs_corr_change_local_highlight_equal_mean,0.0001395680010318756,9.83350599805514e-05,0.00018098317086696623,24,受控光度诊断
+brightness,model.19.eca,local_highlight_variance_increase_fraction,0.6666666666666666,0.4583333333333333,0.8333333333333334,24,受控光度诊断
+brightness,model.19.eca,local_highlight_w_sup_decrease_fraction,0.6666666666666666,0.4583333333333333,0.8333333333333334,24,受控光度诊断
+brightness,model.19.eca,mean_local_highlight_variance_change,0.0001357352981964747,-0.00018086078731964034,0.000441171081426243,24,受控光度诊断
+brightness,model.19.eca,mean_local_highlight_w_sup_change,-3.213683764139811e-06,-1.122678319613139e-05,5.106131235758464e-06,24,受控光度诊断
+brightness,model.19.eca,equal_mean_gray_error,4.044910895594407e-06,1.3583750865691746e-06,8.182711326659437e-06,72,受控光度诊断
+learned_scalar,model.19.eca,learned_alpha,-0.002593994140625,-0.002593994140625,-0.002593994140625,24,训练后标量；符号决定该层校准方向
+learned_scalar,model.19.eca,learned_beta,0.051025390625,0.051025390625,0.051025390625,24,训练后标量；符号决定该层校准方向
+learned_scalar,model.19.eca,learned_gamma,0.016021728515625,0.016021728515625,0.016021728515625,24,训练后标量；符号决定该层校准方向
+brightness,model.22.eca,natural_spearman_gray_vs_corr,-0.4434782608695652,-0.7408169326295421,0.015368063548637255,24,自然样本中像素灰度与深层 corr 的关联
+brightness,model.22.eca,dark_expected_direction_fraction,0.875,0.75,1.0,24,受控光度诊断
+brightness,model.22.eca,bright_expected_direction_fraction,0.75,0.5833333333333334,0.9166666666666666,24,受控光度诊断
+brightness,model.22.eca,dark_w_bri_increase_fraction,0.875,0.75,1.0,24,受控光度诊断
+brightness,model.22.eca,bright_w_bri_decrease_fraction,0.75,0.5833333333333334,0.9166666666666666,24,受控光度诊断
+brightness,model.22.eca,mean_abs_corr_change_global_dark,0.0014209610720475514,0.0007960038259625435,0.002126114722341298,24,受控光度诊断
+brightness,model.22.eca,mean_abs_corr_change_radial_equal_mean,0.00046431149045626324,0.0002589525965352853,0.0007435732521116732,24,受控光度诊断
+brightness,model.22.eca,mean_abs_corr_change_linear_equal_mean,0.00023864954710006714,0.00016003636022408804,0.000333383399993181,24,受控光度诊断
+brightness,model.22.eca,mean_abs_corr_change_local_highlight_equal_mean,0.00018418083588282266,0.00010957621658841769,0.00027385816598931944,24,受控光度诊断
+brightness,model.22.eca,local_highlight_variance_increase_fraction,0.7083333333333334,0.5416666666666666,0.875,24,受控光度诊断
+brightness,model.22.eca,local_highlight_w_sup_decrease_fraction,0.6666666666666666,0.4583333333333333,0.8333333333333334,24,受控光度诊断
+brightness,model.22.eca,mean_local_highlight_variance_change,0.00047116664548714954,0.00012434693053364754,0.0008399283358206351,24,受控光度诊断
+brightness,model.22.eca,mean_local_highlight_w_sup_change,-3.4794211387634277e-06,-6.2068924307823185e-06,-9.23623641331992e-07,24,受控光度诊断
+brightness,model.22.eca,equal_mean_gray_error,4.044910895594407e-06,1.3583750865691746e-06,8.182711326659437e-06,72,受控光度诊断
+learned_scalar,model.22.eca,learned_alpha,0.0193634033203125,0.0193634033203125,0.0193634033203125,24,训练后标量；符号决定该层校准方向
+learned_scalar,model.22.eca,learned_beta,0.01194000244140625,0.01194000244140625,0.01194000244140625,24,训练后标量；符号决定该层校准方向
+learned_scalar,model.22.eca,learned_gamma,0.006443023681640625,0.006443023681640625,0.006443023681640625,24,训练后标量；符号决定该层校准方向

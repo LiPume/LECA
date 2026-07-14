@@ -21,6 +21,7 @@
 - [ ] 在完全相同训练配置下补 seed=123、2026，并报告均值 ± 标准差。
 - [ ] 用同一工具、同一 640 输入统计 Params、FLOPs、batch=1 延迟和 FPS；明确是否含预处理、NMS 和数据传输。
 - [x] seed=42 独立重训练八种组合：ECA、ECA+Var、ECA+Rec、ECA+Bri、ECA+Var+Rec、ECA+Var+Bri、ECA+Rec+Bri、ECA+Var+Rec+Bri；已统一评估 Hard Test。
+- [x] seed=42 阶段级插入位置消融：无 LECA、Backbone 4 处、融合路径 4 处、P3/P4/P5 3 处、Full 8 处；中间三组均先 smoke 再独立重训练，Full 四项指标最高。
 - [ ] 对关键组合补三种子。所有模型固定训练数据、预训练权重、早停、增强和评估脚本；Hard Test 不参与早停、调参或选权重。
 - [x] 推理时 beta/alpha/gamma 置零已单独标为敏感性分析；没有替代上述重训练消融。
 

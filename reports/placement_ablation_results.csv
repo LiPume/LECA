@@ -1,0 +1,6 @@
+placement,description,leca_indices,leca_count,seed,precision,recall,map50,map50_95,params,checkpoint,status
+none0,无 LECA,,0,42,0.9142181053715656,0.8451612903225807,0.9488667393532132,0.5847982939026584,2624080,runs_repro/mechanism_smoke/baseline_seed42/weights/best.pt,controlled_retrained_placement_ablation_observation
+backbone4,仅 Backbone,2|4|6|8,4,42,0.8701157592688344,0.8644088773846059,0.928046722687179,0.5231958307428798,2624110,runs_repro/placement_ablation/backbone4_seed42_full/weights/best.pt,controlled_retrained_placement_ablation_observation
+fusion4,仅多尺度融合路径,13|16|19|22,4,42,0.9482993286056057,0.8283646757593738,0.9371826562273002,0.5888054903913965,2624110,runs_repro/placement_ablation/fusion4_seed42_full/weights/best.pt,controlled_retrained_placement_ablation_observation
+scales3,仅 P3/P4/P5 输出,16|19|22,3,42,0.9385561019625239,0.8774193548387097,0.9454723914761127,0.6083156246849655,2624102,runs_repro/placement_ablation/scales3_seed42_full/weights/best.pt,controlled_retrained_placement_ablation_observation
+full8,Backbone 与融合路径全覆盖,2|4|6|8|13|16|19|22,8,42,0.9742197451718728,0.9225806451612903,0.9795719610284713,0.6140274233899586,2624140,runs_repro/mechanism_smoke/leca_seed42/weights/best.pt,controlled_retrained_placement_ablation_observation

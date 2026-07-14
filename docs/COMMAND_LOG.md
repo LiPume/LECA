@@ -100,3 +100,16 @@ conda run -n yolo env PYTHONPATH=ultralytics-main python tools/evaluate_hard_cas
 ```
 
 六个缺失组合均先通过 1 epoch smoke，再独立完成最长 200 epoch、patience=20 的训练；ECA 与 Full 使用此前同协议 seed=42 权重。八组仅在训练完成后统一评估 Hard Test。146 张场景初标使用不显示预测框的原图联系表，但标注者此前参与过少量案例审计，因此不是严格盲法；图片联系表和逐图统计均只保存在 ignored artifacts。
+
+## 2026-07-14：LECA 插入位置消融
+
+首次构建因脚本加载 Conda 中官方 Ultralytics、未加载项目自定义模块而报 `KeyError: C3k2Baseline/C3k2LECA`。错误未绕过；随后仅在实验脚本中固定项目内 `ultralytics-main` 导入路径，未修改 LECA 核心实现。
+
+```bash
+conda run -n yolo python tools/train_placement_ablation.py --placement <none0|backbone4|fusion4|scales3|full8> --mode build --device 0
+conda run -n yolo python tools/train_placement_ablation.py --placement <backbone4|fusion4|scales3> --mode smoke --device 0
+conda run -n yolo python tools/train_placement_ablation.py --placement <backbone4|fusion4|scales3> --mode full --device 0
+conda run -n yolo python tools/evaluate_placement_ablation.py --device 0 --seed 42 --batch 16
+```
+
+三组中间配置均通过 1 epoch smoke 后独立训练，Hard Test 仅在全部训练完成后统一评估。Full 8 处四项指标最高；小型汇总写入 `reports/placement_ablation_results.csv`，权重、训练图和评估图保存在 ignored `runs_repro/`。

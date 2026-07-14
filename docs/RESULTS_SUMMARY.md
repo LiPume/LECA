@@ -23,4 +23,10 @@ On `exp/mechanism-audit`, three topology-matched configurations were constructed
 
 **Observed:** inference-only neutralization of beta (Var), alpha (Rec), or gamma (Bri) after this 1-epoch LECA smoke produced zero detections for every condition, including full LECA. Thus this undertrained checkpoint has no measurable per-branch metric sensitivity. This is not evidence that the branches have zero value; meaningful branch-value comparison requires a converged controlled model and then retrained ablations.
 
+### Seed-42 controlled training observation
+
+The three matched models early-stopped at Baseline=46, ECA=88, LECA=62 epochs. On the duplicated historical validation split, all reached mAP50=.995; mAP50-95 was .731 (Baseline), .763 (ECA), and .722 (LECA). **Observed only:** this run does not show a LECA advantage over ECA. It is not a paper comparison because of the duplicated validation images and one seed.
+
+For the converged LECA checkpoint, inference-only neutralization gave: Full .74885 mAP50-95; Var-off .74816; Rec-off .74883; Bri-off .74777. Effects are below .0011 on this split. **Observed only:** the branches have small immediate inference sensitivity here; this does not replace retrained ablations or prove a zero contribution.
+
 Local-only outputs are in `runs_repro/mechanism_smoke/`, including normal training/validation images and LECA aggregate CSVs. The first LECA smoke lacked aggregate statistics because hooks were attached before the trainer copied the model; this was recorded, fixed, and repeated as `leca_stats_retry` rather than overwritten.

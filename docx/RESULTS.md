@@ -10,4 +10,6 @@
 
 分支关闭敏感性在 1 epoch 后所有条件均为零检测，说明模型尚未收敛，暂时不能量化 Var/Rec/Bri 的贡献；不能把它解释为“分支没用”。
 
+完整受控 seed=42 观察中，Baseline/ECA/LECA 的 mAP50 都为 .995，而 mAP50-95 分别为 .731/.763/.722；本次没有观察到 LECA 超过 ECA。由于验证集重复且只有一个种子，这只是审计观察，不是论文结论。
+
 正式结果边界见 [`docs/RESULTS_SUMMARY.md`](../docs/RESULTS_SUMMARY.md)；3 分钟答辩稿和追问见 [`docs/INTERVIEW_EVIDENCE.md`](../docs/INTERVIEW_EVIDENCE.md)。

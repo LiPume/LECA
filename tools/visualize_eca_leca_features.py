@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import csv
+import argparse
 from pathlib import Path
 
 import cv2
@@ -47,8 +48,15 @@ def overlay(image: np.ndarray, feature: torch.Tensor) -> np.ndarray:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description="导出 Hard Test 的 ECA/LECA 特征图对比，仅保存本地。")
+    parser.add_argument("--image-list", type=Path, help="每行一个 Hard Test 图像文件名；省略时取前 5 张。")
+    args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
-    images = sorted((root / "ultralytics-main/dataset/hardData/YOLODataset/images/test").glob("*"))[:5]
+    image_dir = root / "ultralytics-main/dataset/hardData/YOLODataset/images/test"
+    if args.image_list:
+        images = [image_dir / name.strip() for name in args.image_list.read_text().splitlines() if name.strip()]
+    else:
+        images = sorted(image_dir.glob("*"))[:5]
     output = root / "artifacts/visualizations/hard_feature_maps"
     output.mkdir(parents=True, exist_ok=True)
     eca = YOLO(str(root / "runs_repro/mechanism_smoke/eca_seed42/weights/best.pt"))

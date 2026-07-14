@@ -85,7 +85,7 @@
 
 ## 7. 场景初标结果
 
-已逐页查看 146 张不带预测框的 Hard Test 原图，并按连续场景完成单人视觉初标：structural_clutter 13、reflection 23、mixed 20、hole 65、normal 15、circular_plate 10。没有可靠的真实 low_light/rivet 子集。完整协议见 `metadata/HARD_CASE_LABELING_PROTOCOL.md`；这是待人工复核的 AI 单人初标，不是双人一致性真值。
+已逐页查看 146 张不带预测框的 Hard Test 原图，并按连续场景完成单人视觉初标：structural_clutter 13、reflection 23、mixed 20、hole 65、normal 15、circular_plate 10。没有可靠的真实 low_light/rivet 子集。完整协议见 `metadata/HARD_CASE_LABELING_PROTOCOL.md`；这是待人工复核的 AI 单人初标，标注者此前接触过少量模型案例，因此不是严格盲法或双人一致性真值。
 
 分组结果显示，完整 LECA 相比 ECA 的主要 mAP@0.5 增益出现在 `hole` 初标组：ECA 为 .924，Full 为 .960；mAP@0.5:0.95 从 .378 提高到 .449。`reflection` 初标组中二者 mAP@0.5 都是 .995，Full 的 mAP@0.5:0.95=.749，反而低于 ECA 的 .765；Var+Rec 在该组为 .782。
 
@@ -116,7 +116,7 @@
 
 ### 9.1 初标人工复核
 
-当前 AI 单人初标已经在不看逐图预测的条件下完成。下一步由熟悉现场的人员只看原图复核 `metadata/hard_case_index.csv`，最好两人独立标注并报告一致性。当前每个 case type 基本对应一个连续视频场景，类别与场景高度混杂；不能把几十张相邻帧当成几十个独立反光环境。只有增加多个独立场景，才能稳健回答“真实反光中是否更常出现某种统计模式”。
+当前 AI 单人初标使用了不显示预测框的原图联系表，但标注者此前参与过少量模型案例审计，因此不能称为严格盲标。下一步由熟悉现场且未接触模型预测的人员只看原图复核 `metadata/hard_case_index.csv`，最好两人独立标注并报告一致性。当前每个 case type 基本对应一个连续视频场景，类别与场景高度混杂；不能把几十张相邻帧当成几十个独立反光环境。只有增加多个独立场景，才能稳健回答“真实反光中是否更常出现某种统计模式”。
 
 ### 9.2 多随机种子
 

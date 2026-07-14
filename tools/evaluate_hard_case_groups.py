@@ -83,7 +83,7 @@ def main() -> None:
                          "precision": values["metrics/precision(B)"], "recall": values["metrics/recall(B)"],
                          "map50": values["metrics/mAP50(B)"], "map50_95": values["metrics/mAP50-95(B)"],
                          "tp_conf025_iou05": tp, "fp_conf025_iou05": fp, "fn_conf025_iou05": fn,
-                         "annotation_status": "AI_single_reviewer_raw_image_initial_labels"})
+                         "annotation_status": "AI_single_reviewer_non_blind_initial_labels"})
     local = output / f"hard_case_results_seed{args.seed}.csv"; tracked = root / "reports/hard_case_results.csv"
     for path in (local, tracked):
         with path.open("w", newline="") as file:

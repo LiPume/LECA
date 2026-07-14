@@ -99,4 +99,4 @@ conda run -n yolo env PYTHONPATH=ultralytics-main python tools/evaluate_factoria
 conda run -n yolo env PYTHONPATH=ultralytics-main python tools/evaluate_hard_case_groups.py --device 3 --seed 42
 ```
 
-六个缺失组合均先通过 1 epoch smoke，再独立完成最长 200 epoch、patience=20 的训练；ECA 与 Full 使用此前同协议 seed=42 权重。八组仅在训练完成后统一评估 Hard Test。146 张场景初标只查看原图联系表，不读取逐图模型预测；图片联系表和逐图统计均只保存在 ignored artifacts。
+六个缺失组合均先通过 1 epoch smoke，再独立完成最长 200 epoch、patience=20 的训练；ECA 与 Full 使用此前同协议 seed=42 权重。八组仅在训练完成后统一评估 Hard Test。146 张场景初标使用不显示预测框的原图联系表，但标注者此前参与过少量案例审计，因此不是严格盲法；图片联系表和逐图统计均只保存在 ignored artifacts。

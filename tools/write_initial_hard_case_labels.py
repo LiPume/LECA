@@ -35,7 +35,7 @@ def main() -> None:
         frame = int(image.stem.split("_")[0])
         case_type, group, note = label(frame)
         rows.append({"image_id": image.name, "case_type": case_type,
-                     "notes": f"{group}；AI单人仅看原图初标，未查看该图预测；{note}；答辩前建议人工复核"})
+                     "notes": f"{group}；AI单人基于无预测框联系表初标；非严格盲法，标注者此前参与过少量模型案例审计；{note}；答辩前建议人工复核"})
     with output.open("w", newline="") as file:
         writer = csv.DictWriter(file, fieldnames=("image_id", "case_type", "notes"), lineterminator="\n"); writer.writeheader(); writer.writerows(rows)
     counts = {}

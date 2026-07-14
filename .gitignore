@@ -1,0 +1,106 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Secrets and local environment
+.env
+.env.*
+*.key
+*.pem
+*.p12
+credentials*
+secrets*
+wandb_api_key*
+.local/
+conda-meta/
+
+# Local datasets and source annotations (not versioned)
+data/
+dataset/
+datasets/
+images/
+labels/
+train/
+val/
+test/
+raw_data/
+private_data/
+auto_repair_screws/
+collected_jsons/
+ultralytics-main/dataset/
+
+# All image and video files
+*.jpg
+*.jpeg
+*.png
+*.bmp
+*.gif
+*.webp
+*.tif
+*.tiff
+*.heic
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# Model weights and exported models
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.engine
+*.torchscript
+*.tflite
+weights/
+checkpoints/
+
+# Training and diagnostic outputs
+runs/
+runs_repro/
+outputs/
+output/
+results/
+artifacts/
+visualizations/
+feature_maps/
+predictions/
+logs/
+tensorboard/
+wandb/
+mlruns/
+ultralytics-main/runs/
+ultralytics-main/logs_cascade/
+ultralytics-main/logs_final/
+ultralytics-main/predict_image/
+ultralytics-main/draw/output/
+
+# Large intermediate data
+*.npy
+*.npz
+*.pkl
+*.pickle
+*.parquet
+*.h5
+*.hdf5
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.log
+
+# Generated local copies and package metadata
+ultralytics-main/ultralytics.egg-info/
+ultralytics-main/site/

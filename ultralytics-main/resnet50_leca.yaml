@@ -1,0 +1,56 @@
+# ResNet50 + LECA + YOLOv11 Head
+# 专用于回应 Reviewer 2 的泛化性实验
+
+# Parameters
+nc: 80 # 记得改成你的 screw.yaml 里的类别数 (比如 1 或 2)
+scales:
+  n: [0.33, 0.25, 1024]
+
+# ResNet-50 Backbone
+# Args 格式: [base_channels, num_blocks, stride, is_basic_block(False for ResNet50)]
+backbone:
+  # Stem (初始层)
+  - [-1, 1, Conv, [64, 7, 2, 3]]  # 0-P1/2 (64 ch)
+  - [-1, 1, nn.MaxPool2d, [3, 2, 1]] # 1-P2/4
+
+  # Layer 1 (3 blocks)
+  # args[1]=64, args[3]=False => 输出 = 64*4 = 256
+  - [-1, 1, ResNetLayer, [64, 3, 1, False]] # 2 (P2, 256 ch)
+
+  # Layer 2 (4 blocks) -> P3/8
+  # args[1]=128, args[3]=False => 输出 = 128*4 = 512
+  - [-1, 1, ResNetLayer, [128, 4, 2, False]] # 3 (P3, 512 ch)
+  - [-1, 1, LECA, []] # <--- 插入 LECA (针对 P3 特征)
+
+  # Layer 3 (6 blocks) -> P4/16
+  # args[1]=256, args[3]=False => 输出 = 256*4 = 1024
+  - [-1, 1, ResNetLayer, [256, 6, 2, False]] # 5 (P4, 1024 ch)
+  - [-1, 1, LECA, []] # <--- 插入 LECA (针对 P4 特征)
+
+  # Layer 4 (3 blocks) -> P5/32
+  # args[1]=512, args[3]=False => 输出 = 512*4 = 2048
+  - [-1, 1, ResNetLayer, [512, 3, 2, False]] # 7 (P5, 2048 ch)
+  - [-1, 1, LECA, []] # <--- 插入 LECA (针对 P5 特征)
+  
+  # SPPF (保留以增强感受野)
+  - [-1, 1, SPPF, [2048, 5]] # 9
+
+# YOLO Head (根据 ResNet 通道数自动适配)
+head:
+  - [-1, 1, nn.Upsample, [None, 2, 'nearest']]
+  - [[-1, 6], 1, Concat, [1]] # cat P4 (Layer 3 + LECA)
+  - [-1, 3, C3k2, [512, False]] # 12
+
+  - [-1, 1, nn.Upsample, [None, 2, 'nearest']]
+  - [[-1, 4], 1, Concat, [1]] # cat P3 (Layer 2 + LECA)
+  - [-1, 3, C3k2, [256, False]] # 15 (P3/8-small)
+
+  - [-1, 1, Conv, [256, 3, 2]]
+  - [[-1, 12], 1, Concat, [1]] # cat head P4
+  - [-1, 3, C3k2, [512, False]] # 18 (P4/16-medium)
+
+  - [-1, 1, Conv, [512, 3, 2]]
+  - [[-1, 9], 1, Concat, [1]] # cat head P5
+  - [-1, 3, C3k2, [1024, True]] # 21 (P5/32-large)
+
+  - [[15, 18, 21], 1, Detect, [nc]] # Detect(P3, P4, P5)

@@ -1,8 +1,8 @@
-# Command log
+# 命令记录
 
-All commands below are run from `/home/lzx/car_bolt_detection` unless stated otherwise. Paths to datasets, runs, images, and weights remain local and are ignored by Git.
+除非另有说明，以下命令均在 `/home/lzx/car_bolt_detection` 执行。数据集、图片、权重、训练输出和可视化均在本地且被 Git 忽略。
 
-## 2026-07-14: phase 0 inspection
+## 2026-07-14：环境与安全审计
 
 ```bash
 pwd
@@ -14,11 +14,7 @@ grep -RInE '(BEGIN (RSA|OPENSSH|EC) PRIVATE KEY|github_pat_|ghp_|AKIA|api[_-]?ke
 conda env export -n yolo --no-builds | sed '/^prefix:/d' > environment.yml
 ```
 
-## Controlled commands (not yet authorized to run)
-
-Long training is blocked until the published YOLO11 LECA YAML and its exact attention placement are recovered, and the confirmed train/validation leakage is resolved in a new, documented split. The future smoke and reproduction commands are specified in `docs/REPRODUCTION_PROTOCOL.md`.
-
-## 2026-07-14: read-only implementation and data audit
+本地数据与模型审计：
 
 ```bash
 conda run -n yolo env PYTHONPATH=ultralytics-main python tools/audit_dataset.py \
@@ -30,9 +26,9 @@ conda run -n yolo env PYTHONPATH=ultralytics-main python tools/audit_dataset.py 
 conda run -n yolo env PYTHONPATH=ultralytics-main python tools/audit_model_build.py
 ```
 
-These commands generated local-only aggregate metadata under ignored `artifacts/data_audit/`. The first script found five exact image SHA256 matches spanning train and validation. The model auditor found eight implicit LECA modules in the current `yolo11.yaml`; it also found no YOLO11 LECA YAML.
+上述审计发现历史 train/val 有 5 组精确重复，且当前 `yolo11.yaml` 含 8 个隐式 LECA。输出只落地到本地 `artifacts/data_audit/`。
 
-## 2026-07-14: Git safety actions
+## 2026-07-14：Git 安全快照
 
 ```bash
 git init
@@ -45,4 +41,46 @@ git push -u origin main
 git push origin paper-original
 ```
 
-The remote was empty and the non-force push succeeded. Media, datasets, weights, training outputs, artifacts, and visualizations were verified ignored before staging.
+远端为空，非强推送成功。暂存前已验证媒体、数据集、权重、训练输出、artifacts 和可视化均被忽略。
+
+## 2026-07-14：受控机制审计与 Smoke Test
+
+```bash
+git switch -c exp/mechanism-audit
+conda run -n yolo env PYTHONPATH=ultralytics-main python tools/train_mechanism_smoke.py \
+  --model baseline --device 0 --batch 16 --workers 4
+conda run -n yolo env PYTHONPATH=ultralytics-main python tools/train_mechanism_smoke.py \
+  --model eca --device 0 --batch 16 --workers 4
+conda run -n yolo env PYTHONPATH=ultralytics-main python tools/train_mechanism_smoke.py \
+  --model leca --name leca_stats_retry --device 0 --batch 16 --workers 4
+```
+
+该分支以显式 Identity/ECA/LECA C3k2 包装器建立拓扑匹配模型，不是论文复现。第一次 LECA 统计因 hook 注册早于 Ultralytics 复制训练模型而未记录特征聚合；已修复为 `on_pretrain_routine_end` 后注册，并保留原输出、用 `leca_stats_retry` 单独重跑，未覆盖任何结果。
+
+```bash
+conda run -n yolo env PYTHONPATH=ultralytics-main python tools/evaluate_branch_sensitivity.py \
+  --checkpoint runs_repro/mechanism_smoke/leca_stats_retry/weights/best.pt --device 0
+```
+
+1 epoch 后 Full/Var-off/Rec-off/Bri-off 均无检测，记录为未收敛限制，不能解释为分支无价值。
+
+## 2026-07-14：Hard Test 受控评估与特征图
+
+```bash
+conda run -n yolo env PYTHONPATH=ultralytics-main python -m py_compile \
+  tools/evaluate_hard_test.py tools/visualize_eca_leca_features.py
+conda run -n yolo env PYTHONPATH=ultralytics-main python tools/evaluate_hard_test.py
+conda run -n yolo env PYTHONPATH=ultralytics-main python tools/visualize_eca_leca_features.py
+```
+
+输出：Hard Test 汇总在本地 `runs_repro/hard_test_controlled/hard_test_summary.csv`；特征图面板与索引在本地 `artifacts/visualizations/hard_feature_maps/`。二者均被 Git 忽略。
+
+Hard Test 精确重复检查：
+
+```bash
+python - <<'PY'
+# 对 trainDataV3 与 hardData/YOLODataset 中所有图像计算 SHA256 并求交集
+PY
+```
+
+结果：`trainDataV3_images=159`、`hard_images=292`、`exact_sha256_overlap=0`。该检查只证明无字节级重复，不代替近重复或使用时序审计。

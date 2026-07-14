@@ -32,6 +32,9 @@ from ultralytics.nn.modules import (
     Bottleneck,
     BottleneckCSP,
     C2f,
+    C3k2Baseline,
+    C3k2ECA,
+    C3k2LECA,
     C2fAttn,
     C2fCIB,
     C2fPSA,
@@ -1595,6 +1598,9 @@ def parse_model(d, ch, verbose=True):
             C2,
             C2f,
             C3k2,
+            C3k2Baseline,
+            C3k2ECA,
+            C3k2LECA,
             RepNCSPELAN4,
             ELAN1,
             ADown,
@@ -1621,6 +1627,9 @@ def parse_model(d, ch, verbose=True):
             C2,
             C2f,
             C3k2,
+            C3k2Baseline,
+            C3k2ECA,
+            C3k2LECA,
             C2fAttn,
             C3,
             C3TR,
@@ -1666,7 +1675,7 @@ def parse_model(d, ch, verbose=True):
             if m in repeat_modules:
                 args.insert(2, n)  # number of repeats
                 n = 1
-            if m is C3k2:  # for M/L/X sizes
+            if m in (C3k2, C3k2Baseline, C3k2ECA, C3k2LECA):  # preserve YOLO11 detection-head behavior
                 legacy = False
                 if scale in "mlx":
                     args[3] = True

@@ -23,6 +23,9 @@ __all__ = (
     "C2",
     "C3",
     "C2f",
+    "C3k2Baseline",
+    "C3k2ECA",
+    "C3k2LECA",
     "C2fAttn",
     "ImagePoolingAttn",
     "ContrastiveHead",
@@ -1134,6 +1137,30 @@ class C3k2(C2f):
         self.m = nn.ModuleList(
             C3k(self.c, self.c, 2, shortcut, g) if c3k else Bottleneck(self.c, self.c, shortcut, g) for _ in range(n)
         )
+
+
+class C3k2Baseline(C3k2):
+    """C3k2 with identity attention for the controlled mechanism-audit baseline."""
+
+    def __init__(self, c1: int, c2: int, n: int = 1, c3k: bool = False, e: float = 0.5, g: int = 1, shortcut: bool = True):
+        super().__init__(c1, c2, n, c3k, e, g, shortcut)
+        self.eca = nn.Identity()
+
+
+class C3k2ECA(C3k2):
+    """C3k2 with standard ECA, used only by the controlled mechanism audit."""
+
+    def __init__(self, c1: int, c2: int, n: int = 1, c3k: bool = False, e: float = 0.5, g: int = 1, shortcut: bool = True):
+        super().__init__(c1, c2, n, c3k, e, g, shortcut)
+        self.eca = ECA(c2)
+
+
+class C3k2LECA(C3k2):
+    """C3k2 with the existing LECA implementation, explicitly named for audit provenance."""
+
+    def __init__(self, c1: int, c2: int, n: int = 1, c3k: bool = False, e: float = 0.5, g: int = 1, shortcut: bool = True):
+        super().__init__(c1, c2, n, c3k, e, g, shortcut)
+        self.eca = LECA(c2)
 
 
 class C3k(C3):

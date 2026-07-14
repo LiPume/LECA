@@ -46,3 +46,17 @@ git push origin paper-original
 ```
 
 The remote was empty and the non-force push succeeded. Media, datasets, weights, training outputs, artifacts, and visualizations were verified ignored before staging.
+
+## 2026-07-14: controlled mechanism-audit branch
+
+```bash
+git switch -c exp/mechanism-audit
+conda run -n yolo env PYTHONPATH=ultralytics-main python tools/train_mechanism_smoke.py \
+  --model baseline --device 0 --batch 16 --workers 4
+conda run -n yolo env PYTHONPATH=ultralytics-main python tools/train_mechanism_smoke.py \
+  --model eca --device 0 --batch 16 --workers 4
+conda run -n yolo env PYTHONPATH=ultralytics-main python tools/train_mechanism_smoke.py \
+  --model leca --name leca_stats_retry --device 0 --batch 16 --workers 4
+```
+
+This branch adds explicit topology-matched Identity/ECA/LECA C3k2 wrappers and three audit YAMLs. It is not a paper reproduction. The first LECA statistics attempt recorded scalars but no feature aggregates because the hook was registered before Ultralytics copied its training model; the corrected hook is registered at `on_pretrain_routine_end`, and the successful retry is retained separately.

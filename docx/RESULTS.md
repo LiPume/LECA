@@ -6,4 +6,6 @@
 - Confirmed：历史训练/验证划分有 5 组精确重复图像跨集合。
 - Not run：新的 smoke、复现、消融、三种子、压力测试。因此没有新的性能数字可用于论文或答辩结论。
 
+补充：受控机制审计分支已经完成 Identity、ECA、LECA 的 1 epoch smoke，并记录了 8 层 LECA 的 alpha/beta/gamma 与权重统计；没有 NaN/Inf。它只说明模块可训练且数值稳定，不能作为最终性能或因果结论。
+
 正式结果边界见 [`docs/RESULTS_SUMMARY.md`](../docs/RESULTS_SUMMARY.md)；3 分钟答辩稿和追问见 [`docs/INTERVIEW_EVIDENCE.md`](../docs/INTERVIEW_EVIDENCE.md)。

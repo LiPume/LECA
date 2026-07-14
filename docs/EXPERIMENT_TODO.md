@@ -20,9 +20,9 @@
 - [~] seed=42 的 Baseline/ECA/LECA Hard Test 已完成；结果只可称一次受控观察。
 - [ ] 在完全相同训练配置下补 seed=123、2026，并报告均值 ± 标准差。
 - [ ] 用同一工具、同一 640 输入统计 Params、FLOPs、batch=1 延迟和 FPS；明确是否含预处理、NMS 和数据传输。
-- [ ] 重训练八种组合：ECA、ECA+Var、ECA+Rec、ECA+Bri、ECA+Var+Rec、ECA+Var+Bri、ECA+Rec+Bri、ECA+Var+Rec+Bri。
+- [x] seed=42 独立重训练八种组合：ECA、ECA+Var、ECA+Rec、ECA+Bri、ECA+Var+Rec、ECA+Var+Bri、ECA+Rec+Bri、ECA+Var+Rec+Bri；已统一评估 Hard Test。
 - [ ] 对关键组合补三种子。所有模型固定训练数据、预训练权重、早停、增强和评估脚本；Hard Test 不参与早停、调参或选权重。
-- [ ] 将推理时 beta/alpha/gamma 置零仅作为敏感性分析，不能替代上述重训练消融。
+- [x] 推理时 beta/alpha/gamma 置零已单独标为敏感性分析；没有替代上述重训练消融。
 
 ## P2：答辩机制证据
 
@@ -31,7 +31,7 @@
 - [ ] H2：按 TP/FP/FN 和反光、孔洞、铆钉、暗光类型统计 variance、`w_sup`、最终权重；报告 Spearman、效应量和分布。
 - [ ] H3：按低照度/正常样本及 TP/FP/FN 比较 `mu`、`w_rec`；推理时 alpha=0 只作为诊断。
 - [ ] H4：关联 `corr` 与图像灰度均值，并比较不同深度及空间不均匀样本；不得将其直接称为物理亮度。
-- [ ] 建立可上传的 `metadata/hard_case_index.csv`（仅相对文件名、类型、备注），不含图片。
+- [~] 已建立 146 张 `metadata/hard_case_index.csv` AI 单人原图初标并完成分组指标；仍需现场人员复核，且连续场景数不足。
 - [ ] 输出 alpha/beta/gamma 分层曲线、权重分布、TP/FP/FN 分布和分支关闭预测对比；图片仅保存本地。
 
 ## P3：Controlled Stress Tests

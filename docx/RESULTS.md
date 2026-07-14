@@ -8,4 +8,6 @@
 
 补充：受控机制审计分支已经完成 Identity、ECA、LECA 的 1 epoch smoke，并记录了 8 层 LECA 的 alpha/beta/gamma 与权重统计；没有 NaN/Inf。它只说明模块可训练且数值稳定，不能作为最终性能或因果结论。
 
+分支关闭敏感性在 1 epoch 后所有条件均为零检测，说明模型尚未收敛，暂时不能量化 Var/Rec/Bri 的贡献；不能把它解释为“分支没用”。
+
 正式结果边界见 [`docs/RESULTS_SUMMARY.md`](../docs/RESULTS_SUMMARY.md)；3 分钟答辩稿和追问见 [`docs/INTERVIEW_EVIDENCE.md`](../docs/INTERVIEW_EVIDENCE.md)。

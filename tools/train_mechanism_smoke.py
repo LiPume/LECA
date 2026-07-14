@@ -142,6 +142,8 @@ def main() -> None:
     parser.add_argument("--batch", type=int, default=16)
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--name", help="Ignored local run directory name; defaults to the model name.")
+    parser.add_argument("--epochs", type=int, default=1)
+    parser.add_argument("--patience", type=int, default=20)
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     model = YOLO(str(root / "configs" / f"yolo11_audit_{args.model}.yaml"))
@@ -153,13 +155,14 @@ def main() -> None:
     model.train(
         data=str(root / "ultralytics-main/ultralytics/cfg/models/datasets/screw.yaml"),
         pretrained=str(root / "ultralytics-main/yolo11n.pt"),
-        epochs=1,
+        epochs=args.epochs,
         imgsz=640,
         batch=args.batch,
         device=args.device,
         workers=args.workers,
         seed=42,
         deterministic=True,
+        patience=args.patience,
         amp=True,
         cache=False,
         plots=True,

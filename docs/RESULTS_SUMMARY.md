@@ -21,4 +21,6 @@ On `exp/mechanism-audit`, three topology-matched configurations were constructed
 
 **Observed:** a corrected post-initialization LECA hook recorded all eight layers × eight aggregate statistics on the LECA smoke. It found no NaN or Inf values. Alpha, beta, and gamma moved from their initial values in all layers after one epoch. This shows the three factors participate in optimization; it does not establish that any factor detects reflection, weak bolts, or physical brightness.
 
+**Observed:** inference-only neutralization of beta (Var), alpha (Rec), or gamma (Bri) after this 1-epoch LECA smoke produced zero detections for every condition, including full LECA. Thus this undertrained checkpoint has no measurable per-branch metric sensitivity. This is not evidence that the branches have zero value; meaningful branch-value comparison requires a converged controlled model and then retrained ablations.
+
 Local-only outputs are in `runs_repro/mechanism_smoke/`, including normal training/validation images and LECA aggregate CSVs. The first LECA smoke lacked aggregate statistics because hooks were attached before the trainer copied the model; this was recorded, fixed, and repeated as `leca_stats_retry` rather than overwritten.

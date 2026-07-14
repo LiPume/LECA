@@ -60,3 +60,10 @@ conda run -n yolo env PYTHONPATH=ultralytics-main python tools/train_mechanism_s
 ```
 
 This branch adds explicit topology-matched Identity/ECA/LECA C3k2 wrappers and three audit YAMLs. It is not a paper reproduction. The first LECA statistics attempt recorded scalars but no feature aggregates because the hook was registered before Ultralytics copied its training model; the corrected hook is registered at `on_pretrain_routine_end`, and the successful retry is retained separately.
+
+```bash
+conda run -n yolo env PYTHONPATH=ultralytics-main python tools/evaluate_branch_sensitivity.py \
+  --checkpoint runs_repro/mechanism_smoke/leca_stats_retry/weights/best.pt --device 0
+```
+
+All full/Var-off/Rec-off/Bri-off conditions returned zero detections after one epoch. This is recorded as an undertraining limitation, not a negative finding about LECA branches.

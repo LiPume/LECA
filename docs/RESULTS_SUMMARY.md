@@ -1,32 +1,40 @@
-# Results summary
+# 结果汇总
 
-## Audit-stage result (not a reproduction result)
+## 结论边界
 
-| Status | Result |
-| --- | --- |
-| Confirmed | The current formula body matches the requested LECA equations and has finite synthetic forward/backward gradients. |
-| Confirmed | Current `yolo11.yaml` has eight implicit LECA modules, so it is not a baseline. |
-| Confirmed | Current comparison YAMLs are structurally mismatched and lower-parameter; no fair Params/FLOPs comparison exists. |
-| Confirmed | The historical canonical train/val split has five exact cross-split duplicates. |
-| Confirmed | The exact paper YOLO11 LECA YAML/source version is absent from the current project. |
-| Not run | Paper-reproduction smoke, seed=42 reproduction, multi-seed study, ablations, stress tests, hard-case metrics. |
+- **已确认（Confirmed）**：当前源码中的 LECA 公式主体、张量形状和广播方式与设计式一致；合成前向与反向传播均为有限值。
+- **已确认（Confirmed）**：当前历史 `yolo11.yaml` 隐式包含 8 个 LECA，不能作为无注意力 Baseline；历史训练/验证划分存在 5 组跨集合精确重复图片。
+- **已观察（Observed）**：下列数字来自独立的受控机制审计分支、同一 seed=42 的 Hard Test 评估，不是已发表论文的复现结果，也不构成因果证明。
+- **假设（Hypothesis）**：方差、低响应和全局激活统计可能共同校准 ECA 的通道权重；它们并不是“反光”“螺栓”或“物理亮度”的确定性标签。
 
-No numerical detection metric from the existing historical run directories is re-reported here because the architecture/split provenance is unresolved.
+## 受控模型与 Smoke Test
 
-## Controlled mechanism-audit smoke (separate branch, not paper reproduction)
+在 `exp/mechanism-audit` 中，使用相同 YOLO11 拓扑与同样的 8 个插入位置构建三个模型：Identity Baseline（2,624,080 参数）、ECA（2,624,116，增加 36）和 LECA（2,624,140，相对 Baseline 增加 60、相对 ECA 增加 24）。三者均完成 seed=42 的 1 epoch smoke test；训练、验证、权重保存和本地可视化均正常。
 
-On `exp/mechanism-audit`, three topology-matched configurations were constructed without changing `paper-original`: Identity Baseline (2,624,080 parameters), ECA (2,624,116; +36), and LECA (2,624,140; +60 versus Baseline, +24 versus ECA). All place the selected module at the same eight C3k2 sites.
+**已观察（Observed）**：LECA 的 8 层聚合 hook 记录未发现 NaN/Inf，且每层的 alpha、beta、gamma 在一轮后均发生更新。这只说明分支参与优化和数值过程正常，不能说明某个分支识别了反光、弱螺栓或真实亮度。
 
-**Confirmed:** each configuration completed a seed-42, 1-epoch smoke on CUDA:0; pretrained transfer, checkpoint saving, training, validation, and local visual outputs succeeded. These 1-epoch metrics are intentionally not reported as method performance: the model is not converged and the historical validation split remains duplicated.
+历史训练/验证集的 mAP50 接近 .995，且已确认存在跨集合重复，因此不作为答辩性能结论使用。
 
-**Observed:** a corrected post-initialization LECA hook recorded all eight layers × eight aggregate statistics on the LECA smoke. It found no NaN or Inf values. Alpha, beta, and gamma moved from their initial values in all layers after one epoch. This shows the three factors participate in optimization; it does not establish that any factor detects reflection, weak bolts, or physical brightness.
+## Hard Test：受控 seed=42 观察
 
-**Observed:** inference-only neutralization of beta (Var), alpha (Rec), or gamma (Bri) after this 1-epoch LECA smoke produced zero detections for every condition, including full LECA. Thus this undertrained checkpoint has no measurable per-branch metric sensitivity. This is not evidence that the branches have zero value; meaningful branch-value comparison requires a converged controlled model and then retrained ablations.
+评估使用 `dataset/hardData/YOLODataset/hard_test_set.yaml` 的 `test` 划分；验证和训练均不指向该 YAML。SHA256 检查显示 `trainDataV3` 的 159 张训练/验证图像与 Hard Test 目录中的 292 个图像文件项之间没有精确重复。该检查不能排除同场景近重复或历史人工调参接触，因此仍应保守解释。
 
-### Seed-42 controlled training observation
+| 受控模型 | Precision | Recall | mAP@0.5 | mAP@0.5:0.95 |
+| --- | ---: | ---: | ---: | ---: |
+| Baseline | 0.9142 | 0.8452 | 0.9489 | 0.5848 |
+| ECA | 0.9082 | 0.8937 | 0.9573 | 0.5831 |
+| LECA | **0.9742** | **0.9226** | **0.9796** | **0.6140** |
 
-The three matched models early-stopped at Baseline=46, ECA=88, LECA=62 epochs. On the duplicated historical validation split, all reached mAP50=.995; mAP50-95 was .731 (Baseline), .763 (ECA), and .722 (LECA). **Observed only:** this run does not show a LECA advantage over ECA. It is not a paper comparison because of the duplicated validation images and one seed.
+**已观察（Observed）**：在这一次固定训练配置与一个随机种子下，LECA 相比 Baseline 的 Precision/Recall/mAP@0.5/mAP@0.5:0.95 分别高 0.0600/0.0774/0.0307/0.0292；相比 ECA 分别高 0.0660/0.0289/0.0222/0.0310。它支持“在当前 Hard Test 上 LECA 表现更好”的实验观察，尚不能支持跨随机种子稳定性、泛化因果或某一具体分支的独立贡献。
 
-For the converged LECA checkpoint, inference-only neutralization gave: Full .74885 mAP50-95; Var-off .74816; Rec-off .74883; Bri-off .74777. Effects are below .0011 on this split. **Observed only:** the branches have small immediate inference sensitivity here; this does not replace retrained ablations or prove a zero contribution.
+## 中间证据（仅本地保存）
 
-Local-only outputs are in `runs_repro/mechanism_smoke/`, including normal training/validation images and LECA aggregate CSVs. The first LECA smoke lacked aggregate statistics because hooks were attached before the trainer copied the model; this was recorded, fixed, and repeated as `leca_stats_retry` rather than overwritten.
+`artifacts/visualizations/hard_feature_maps/` 已保存 5 张 Hard Test 代表图、每图 3 个通道的特征图面板及 `feature_map_index.csv`。每张面板从左到右为：原始输入参考、ECA 模型的归一化特征响应叠加、LECA 模型的归一化特征响应叠加；标题给出通道号、ECA/LECA 权重以及 LECA 的 `w_sup/w_rec/w_bri`。通道按 ECA 与 LECA 最终权重差异选择。
+
+这些图保留空间对应关系，但每个位置对应输入区域的感受野；通道语义通常是分布式的。它们用于说明“两个模型如何响应不同”，不能单凭热图断言“该通道只表示螺栓”或“高响应就是反光”。图片和原始特征均被 `.gitignore` 排除，不上传 GitHub。
+
+## 当前不应下的结论
+
+- 不将一次 seed=42 的 Hard Test 观察写成论文复现或最终结论；需至少补充 123、2026 两个种子。
+- 不把推理时关闭分支替代重新训练消融。历史验证集上 Var/Rec/Bri 关闭的即时差异很小，是敏感性观察，不是分支无效的证明。
+- 不把高方差等同于反光、低均值等同于螺栓，或把深层特征均值等同于物理亮度。

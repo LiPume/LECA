@@ -1,39 +1,69 @@
-# LECA interview evidence
+# LECA 保研答辩证据
 
-## 1. Confirmed facts
+## 1. 已确认的事实
 
-The current LECA code multiplies ECA channel weights by variance, low-response, and feature-space global-activation factors. Current scalar initial values are .02/.04/.01 and are trainable parameters. The audited source/dataset state contains an architecture mismatch and train/val leakage; those are reported rather than hidden.
+当前 LECA 以 ECA 通道权重为基础，并乘以方差抑制、低响应恢复和全局特征激活条件三个因子。alpha、beta、gamma 初值为 0.02/0.04/0.01，且是每层独立、可训练的参数。当前历史代码存在两个必须如实说明的问题：所谓 `yolo11.yaml` 已隐式含 8 个 LECA，且历史训练/验证划分有 5 组精确重复图像。
 
-## 2. Paper-stage design assumptions
+## 2. 论文阶段的设计假设
 
-Variance, low response, and global activation were proposed as statistical clues. They are weak priors, not labels for reflection, bolts, or physical illumination.
+方差、低响应和全局激活是对 ECA 仅使用通道一阶平均描述的补充统计线索。它们是面向反光、低照度和复杂机械背景提出的可学习弱先验，而不是目标、噪声或物理照度的直接标签。
 
-## 3–7. What experiments support / do not support
+## 3. 实验实际支持了什么
 
-No new controlled experiment has been run because P0 gates failed. Therefore no causal mechanism is claimed. H1–H5 in `EXPERIMENT_TODO.md` specify the planned evidence for variance, low-response, and brightness branches.
+在不改动 `paper-original` 的受控分支中，我构造了拓扑和插入位置相同的 Identity Baseline、ECA、LECA。三者均通过 1 epoch smoke test，LECA 的 8 层统计记录没有 NaN/Inf，三个标量在训练后有更新。
 
-## 8–10. Typical cases, failures, reflection
+在与 `trainDataV3` 无 SHA256 精确重复的 Hard Test 上，固定 seed=42 下 LECA 的 P/R/mAP@0.5/mAP@0.5:0.95 为 0.9742/0.9226/0.9796/0.6140，高于同一受控流程下 Baseline 的 0.9142/0.8452/0.9489/0.5848 和 ECA 的 0.9082/0.8937/0.9573/0.5831。这是一次**实验观察**，说明当前设置中 LECA 有正向表现。
 
-Visual examples and TP/FP/FN mechanism cases are pending a valid fixed protocol. The present failure case is methodological: a model called baseline must be verified to have no LECA, and a validation split must not contain training images.
+## 4. 实验没有证明什么
 
-## 11. Future improvement
+一次种子不能证明稳定性；受控重建也不等于原论文的完全复现。特征图和指标不能证明“高方差就是反光”“低均值就是螺栓”或“深层均值就是物理亮度”。分支价值仍需三种子和重新训练的完整消融确认。
 
-First recover the paper version and evaluate it honestly. Only after completing that work may an isolated `exp/leca-v2` explore constrained beta, stable variance, or a spatially explicit illumination mechanism.
+## 5. 方差分支实际观察
 
-## 12. Three-minute interview script
+代码中 `w_sup=1/(1+beta*softplus(var))` 对空间波动施加方向性校准。Hard Test 特征面板记录了每个选择通道的 `variance` 与 `w_sup`；它可作为“空间离散程度被纳入通道权重”的证据。它尚未证明高方差来源于反光，也未证明该分支单独带来增益。
 
-“My work studies bolt detection under difficult visual conditions using LECA, an ECA-based attention mechanism augmented with three feature statistics. I now describe the mechanism conservatively: variance, low response, and global activation are statistical clues, not direct detectors of reflection, bolts, or physical brightness. In the code, LECA computes channel ECA weights, then multiplicatively calibrates them with a softplus-variance suppression term, a low-response recovery term, and a global feature-activation condition.
+## 6. 低响应分支实际观察
 
-Before claiming a gain, I audited reproducibility. The formula implementation itself matched the intended tensor operations and had finite forward and backward gradients. But the audit also found two important threats: the current model named baseline already contains implicit LECA modules, and the current train/validation split contains exact duplicate images. Therefore I do not use those numbers as proof of LECA’s superiority.
+`w_rec=1+alpha*sigmoid(-mu)` 是低响应通道的轻量恢复项。hook 已确认 alpha 可训练；面板记录 `mu` 与 `w_rec`。正确表述是“为低响应通道保留表达机会”，而非“找到弱螺栓”。
 
-My next evidence plan is controlled: recover the exact published source and YAML, construct topology-matched Baseline/ECA/LECA, use a group-aware split, and run a 1-epoch smoke test before full training. Then I will report three seeds and complete branch ablations. For mechanism validation, I will compare feature statistics across TP, FP and FN cases, use inference-only branch neutralization as sensitivity analysis, and run controlled photometric stress tests. My conclusion will distinguish observed robustness from causal interpretation.”
+## 7. 亮度分支实际观察
 
-## 13. Likely questions and answers
+`corr` 来自深层特征的跨通道平均激活，`w_bri` 是样本级标量条件。代码和形状已确认其不能表示局部空间照明图。因此它应称为“全局特征激活条件”，不能直接称为物理亮度校正。
 
-**Why not say high variance means reflection?** Because deep features are learned mixtures; the experiment can show association, not semantic identity.
+## 8. 典型成功证据
 
-**Why not train immediately?** A contaminated split and an attention-containing baseline would make an apparently good result scientifically uninterpretable.
+本地目录 `artifacts/visualizations/hard_feature_maps/` 保存了 5 个 Hard Test 代表样本及 15 张特征图面板。面板以相同层 `model.16.eca`、同一通道编号对比独立训练的 ECA 与 LECA 响应，并标明权重因子。答辩展示时应说“空间响应模式与权重存在可见差异”，不要说“热图证明了通道语义”。
 
-**What does brightness mean here?** In this implementation it is a global deep-feature activation statistic. It must be correlated with image luminance and spatial perturbations before calling it illumination related.
+## 9. 典型失败与限制
 
-**How will you prove robustness?** Fixed untouched test data, identical training protocols, three seeds, and documented controlled photometric stress tests—not selected examples.
+历史训练/验证集接近 0.995 的 mAP@0.5 受跨集合重复影响，不能用作性能证据。1 epoch 分支关闭的零检测现象只是模型未收敛，不能解释为分支无效。Hard Test 仅完成一个种子，尚无 TP/FP/FN 分类型和受控光照压力测试结论。
+
+## 10. 研究反思
+
+我的改进不在于把统计量当作硬规则，而在于将一阶均值扩展为多统计量联合校准，并让检测任务损失学习其实际贡献。发表后审计发现架构和划分的可复现性风险，因此我保留论文版本，同时用独立分支构造可解释的对照，这体现了对结果边界的负责。
+
+## 11. 后续工作
+
+固定 Hard Test，只在训练/验证侧构建按场景分组、去重的新划分；补 42/123/2026 三种子；完成八组重训练消融；对 TP/FP/FN 做方差、权重和相关性统计；再执行只改变光度、不改变标注的 Controlled Stress Tests。若尝试新公式，另建 `exp/leca-v2`，绝不覆盖论文版本。
+
+## 12. 三分钟讲稿
+
+“我的工作面向换电站底盘螺栓检测中反光、低对比度和复杂机械背景造成的误检漏检。考虑实时性，我以 ECA 为基础。ECA 使用全局平均池化生成通道描述，计算量低，但注意力支路主要直接利用一阶平均响应，无法显式描述通道内部的空间离散程度。
+
+因此，我在 ECA 后引入三个轻量统计因子：方差用于补充空间波动信息，低响应恢复项为整体响应偏低的通道保留表达机会，全局激活条件用于适配样本级的特征环境。三者均由可学习参数控制。这里我会严格区分：它们是统计线索和弱先验，不是反光、螺栓或物理亮度的确定性判据。
+
+发表后我对实现进行了保守审计，发现历史代码中基线已经隐式包含 LECA，且训练验证划分有重复图像。因此我没有用原验证集的高分作为结论，而是保留 `paper-original`，在独立分支构建了拓扑一致的 Baseline、ECA、LECA。三种模型先通过 smoke test，LECA 的八层统计均无 NaN/Inf，三个标量都参与了优化。
+
+随后在与训练数据无 SHA256 精确重复的 Hard Test 上，固定 seed=42 时，LECA 的 mAP@0.5 和 mAP@0.5:0.95 分别为 0.9796 和 0.6140，高于同流程 Baseline 的 0.9489 和 0.5848，也高于 ECA 的 0.9573 和 0.5831。这说明在当前受控设置下 LECA 有积极表现，但我不会把一次种子写成最终因果结论。
+
+我还保存了同层同通道的 ECA/LECA 特征图和权重因子。它们显示模型响应确实不同，但不能单凭热图宣称一个通道只代表螺栓。下一步我会补多种子、重训练消融、TP/FP/FN 统计和受控光照压力测试，将性能有效性和机制解释分开报告。”
+
+## 13. 可能追问及回答
+
+**为什么高方差不能直接叫反光？** 深层特征是混合表征；高方差也可能来自真实螺栓边缘和结构纹理。实验最多支持关联，不能直接给出语义等价。
+
+**为什么不用历史验证集的高分？** 已确认训练与验证有精确重复，结果会偏乐观；把它当作最终结论不严谨。
+
+**Hard Test 的结果说明什么？** 说明在一次固定 seed、拓扑匹配的比较中，LECA 指标更高；还需要多种子、独立性审计和重新训练消融来判断稳定性与模块贡献。
+
+**亮度分支到底是什么？** 当前实现是深层全局特征激活条件，而不是像素级亮度估计；它不能直接解决中心暗、边缘亮等局部不均匀照明。

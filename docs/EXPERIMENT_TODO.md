@@ -1,39 +1,41 @@
-# LECA experiment TODO
+# LECA 实验待办
 
-Status legend: `[x]` completed audit item; `[!]` blocking item; `[ ]` pending. No item permits changing the published implementation on `main`.
+状态：`[x]` 已完成；`[~]` 已完成但证据边界有限；`[ ]` 待完成。所有输出目录均在 `.gitignore` 中；不得修改 `paper-original`、历史数据、权重或运行记录。
 
-## P0 — required before training
+## P0：审计与受控验证基础
 
-- [x] Environment snapshot, local source locations, and ignored-output policy.
-- [x] Formula/shape/gradient review of the current LECA body.
-- [x] SHA256/dHash data audit; five exact train/val duplicates were found.
-- [x] Baseline/comparison construction audit; current base has eight implicit LECA modules and comparison YAMLs are structurally unequal.
-- [x] Direct synthetic LECA forward/backward/finite check.
-- [!] Recover the exact paper source commit and YOLO11 Baseline/ECA/LECA YAMLs, or formally start a separate controlled benchmark.
-- [!] Create a new group-aware split without duplicates; archive—not overwrite—the historical split.
-- [ ] Build topology-matched Baseline/ECA/LECA models; record parameters, FLOPs, module inventory, and forward shapes.
-- [ ] Write a resolved immutable config (seed=42, optimizer, LR, decay, batch, imgsz, augmentations, pretrained hash, AMP, workers, cache, device).
-- [ ] Add default-off aggregate hooks; verify no raw feature tensors/images enter Git.
-- [ ] Run one batch forward/backward and finite checks.
-- [ ] Run 1 epoch smoke per model to distinct `runs_repro/<model>/42/smoke/`; inspect loss, scalar gradients, checkpoints, validation and one test execution.
+- [x] 记录环境、源码位置、训练入口和 Git 保护策略。
+- [x] 逐项核对 LECA 公式、形状、参数注册、梯度和数值风险。
+- [x] 审计数据划分：历史 train/val 有 5 组精确重复。
+- [x] 审计模型公平性：历史 `yolo11.yaml` 含 8 个隐式 LECA，不能称为 Baseline。
+- [x] 建立不改论文版本的拓扑匹配 Baseline/ECA/LECA，确认参数量 2,624,080/2,624,116/2,624,140。
+- [x] 单 batch 前向、反向、NaN/Inf 检查和三个模型各 1 epoch smoke test。
+- [x] 默认关闭的 LECA 聚合 hooks；统计仅落地至本地 `artifacts/statistics/`。
+- [x] 选定 Hard Test 作为性能评估集；其与 `trainDataV3` 无 SHA256 精确重复。
+- [ ] 对 Hard Test 与训练数据做 pHash/连续帧近重复审计，并写入仅汇总的报告。
+- [ ] 固化每次训练的预训练权重哈希、配置哈希、实际 GPU、CUDA、PyTorch、Ultralytics 版本。
 
-## P1 — paper reproduction and ablations
+## P1：受控性能与模块价值
 
-Only begin after P0 is fully green.
+- [~] seed=42 的 Baseline/ECA/LECA Hard Test 已完成；结果只可称一次受控观察。
+- [ ] 在完全相同训练配置下补 seed=123、2026，并报告均值 ± 标准差。
+- [ ] 用同一工具、同一 640 输入统计 Params、FLOPs、batch=1 延迟和 FPS；明确是否含预处理、NMS 和数据传输。
+- [ ] 重训练八种组合：ECA、ECA+Var、ECA+Rec、ECA+Bri、ECA+Var+Rec、ECA+Var+Bri、ECA+Rec+Bri、ECA+Var+Rec+Bri。
+- [ ] 对关键组合补三种子。所有模型固定训练数据、预训练权重、早停、增强和评估脚本；Hard Test 不参与早停、调参或选权重。
+- [ ] 将推理时 beta/alpha/gamma 置零仅作为敏感性分析，不能替代上述重训练消融。
 
-1. Train Baseline, ECA, LECA using identical recovered configuration with seed 42.
-2. Compare the direction/trend against the paper. If opposite, stop and diagnose before expanding seeds.
-3. Run seeds 42, 123, 2026 for Baseline/ECA/LECA. Report P, R, mAP50, mAP50-95, best epoch, Params, FLOPs, latency, FPS, mean±std.
-4. Train seed-42 ablations: ECA; ECA+Var; ECA+Rec; ECA+Bri; ECA+Var+Rec; ECA+Var+Bri; ECA+Rec+Bri; full LECA. Retrain selected key configurations for three seeds.
-5. Keep one evaluation script, one untouched test split, same weights, early-stopping rule, and fixed protocol.
+## P2：答辩机制证据
 
-## P2 — mechanism diagnostics, interview evidence, and stress tests
+- [x] 已输出 Hard Test 代表样本中 `model.16.eca` 的 ECA/LECA 对照特征图与权重表，保存在 `artifacts/visualizations/hard_feature_maps/`。
+- [ ] H1：搜索均值接近、方差不同的真实通道；可视化空间响应并对比权重，不给通道强行命名。
+- [ ] H2：按 TP/FP/FN 和反光、孔洞、铆钉、暗光类型统计 variance、`w_sup`、最终权重；报告 Spearman、效应量和分布。
+- [ ] H3：按低照度/正常样本及 TP/FP/FN 比较 `mu`、`w_rec`；推理时 alpha=0 只作为诊断。
+- [ ] H4：关联 `corr` 与图像灰度均值，并比较不同深度及空间不均匀样本；不得将其直接称为物理亮度。
+- [ ] 建立可上传的 `metadata/hard_case_index.csv`（仅相对文件名、类型、备注），不含图片。
+- [ ] 输出 alpha/beta/gamma 分层曲线、权重分布、TP/FP/FN 分布和分支关闭预测对比；图片仅保存本地。
 
-- H1: find equal-mean/different-variance channels and compare ECA/LECA weights; report only feature-statistic observations.
-- H2: compare TP/FP/FN distributions of variance, `w_sup`, final weight, including reflection/hole/rivet/low-light cases; use Spearman, effect sizes, distributions.
-- H3: compare `mu`/`w_rec` by illumination/outcome and perform inference-only alpha=0 sensitivity.
-- H4: correlate `corr` with image luminance and inspect depth/spatial-illumination cases; do not call it physical brightness without evidence.
-- H5: use complete retrained ablations plus inference-only beta/alpha/gamma neutralization; label the latter sensitivity analysis.
-- Controlled Stress Tests: photometric-only global/radial/linear brightness, gamma, high spots/overexposure, contrast perturbations; preserve labels and record parameters.
-- Add `metadata/hard_case_index.csv` with image id, case type, notes only; report hard-case P/R/mAP/FP/FN.
-- Store heatmaps/features/stress images only in `artifacts/visualizations/`; store raw feature samples only in ignored `artifacts/statistics/`.
+## P3：Controlled Stress Tests
+
+- [ ] 对 Hard Test 本地副本仅施加光度变化：全局明暗、Gamma、径向/线性照度梯度、局部高亮/过曝和对比度下降；标注框不变。
+- [ ] 记录每个扰动参数，对 Baseline/ECA/LECA 报告 mAP、Recall、FP、FN 及相对原图下降。
+- [ ] 结论使用“受控压力测试观察”，不声称合成扰动等同于真实物理场景。

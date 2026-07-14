@@ -1,15 +1,25 @@
 # 答辩结果摘要
 
-- Confirmed：当前 LECA 公式主体与设计式匹配，合成前向/反向均有限值。
-- Confirmed：当前 `yolo11.yaml` 已含 8 个隐式 LECA，不能称为 Baseline。
-- Confirmed：当前注意力对比 YAML 改变了主干结构，参数/FLOPs 对比不公平。
-- Confirmed：历史训练/验证划分有 5 组精确重复图像跨集合。
-- Not run：新的 smoke、复现、消融、三种子、压力测试。因此没有新的性能数字可用于论文或答辩结论。
+## 可以直接讲的结果
 
-补充：受控机制审计分支已经完成 Identity、ECA、LECA 的 1 epoch smoke，并记录了 8 层 LECA 的 alpha/beta/gamma 与权重统计；没有 NaN/Inf。它只说明模块可训练且数值稳定，不能作为最终性能或因果结论。
+受控分支在同一拓扑、同一 8 个插入位置下比较了 Baseline、ECA、LECA。参数量分别为 2,624,080、2,624,116、2,624,140；三者均通过 seed=42 的 1 epoch smoke test，LECA 8 层统计没有 NaN/Inf，alpha/beta/gamma 都参与更新。
 
-分支关闭敏感性在 1 epoch 后所有条件均为零检测，说明模型尚未收敛，暂时不能量化 Var/Rec/Bri 的贡献；不能把它解释为“分支没用”。
+在 Hard Test 的一次受控 seed=42 评估中：
 
-完整受控 seed=42 观察中，Baseline/ECA/LECA 的 mAP50 都为 .995，而 mAP50-95 分别为 .731/.763/.722；本次没有观察到 LECA 超过 ECA。由于验证集重复且只有一个种子，这只是审计观察，不是论文结论。
+| 模型 | P | R | mAP@0.5 | mAP@0.5:0.95 |
+| --- | ---: | ---: | ---: | ---: |
+| Baseline | .9142 | .8452 | .9489 | .5848 |
+| ECA | .9082 | .8937 | .9573 | .5831 |
+| LECA | **.9742** | **.9226** | **.9796** | **.6140** |
 
-正式结果边界见 [`docs/RESULTS_SUMMARY.md`](../docs/RESULTS_SUMMARY.md)；3 分钟答辩稿和追问见 [`docs/INTERVIEW_EVIDENCE.md`](../docs/INTERVIEW_EVIDENCE.md)。
+这支持“当前 Hard Test、当前 seed 下 LECA 表现更好”的**观察**。Hard Test 和 `trainDataV3` 无 SHA256 精确重复，但尚未完成跨种子、近重复和完整重训练消融，因此不能说成论文的完整复现或因果证明。
+
+中间证据已输出到本地 `artifacts/visualizations/hard_feature_maps/`：5 个 Hard Test 样本、15 张同层同通道 ECA/LECA 特征图面板及权重表。展示时说“模型响应与通道权重存在可见差异”，不要把热图当作通道语义的直接证明。
+
+## 必须主动说明的审计边界
+
+- 历史 `yolo11.yaml` 已含 8 个隐式 LECA，不能称为 Baseline。
+- 历史 train/val 有 5 组精确重复图像，接近 .995 的历史验证指标不作为性能结论。
+- 高方差不是反光的同义词，低均值不是螺栓的同义词，深层特征均值不是物理亮度。
+
+完整口径和 3 分钟讲稿见 [`docs/INTERVIEW_EVIDENCE.md`](../docs/INTERVIEW_EVIDENCE.md)。

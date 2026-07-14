@@ -1,5 +1,5 @@
-# Cleanup inventory
+# 本地文件保留与清理清单
 
-The repository has been made Git-clean without deleting evidence. The following local content is intentionally retained on disk but ignored by Git: raw/converted annotations (`auto_repair_screws/`, `collected_jsons/`, `ultralytics-main/dataset/`), all images/videos, weights, `runs/`, visualizations, caches, logs, and generated artifacts.
+仓库已实现 Git 干净化，但没有删除任何证据。原始/转换标注、`ultralytics-main/dataset/`、图片视频、权重、`runs/`、可视化、缓存、日志和生成 artifacts 均保留在本地并被 Git 忽略。
 
-No existing data, original experiment output, or checkpoint was deleted. That is deliberate: deletion would violate the audit requirement to preserve the published experimental record. After the audit is complete, safe candidates for a separate user-approved local cleanup are Python caches, `.idea/`, generated label caches, and duplicate *derived* files; raw images/labels and historic runs remain evidence and need a retention decision, not automatic removal.
+不删除历史数据、原实验输出和权重是审计要求：它们是论文版本的可追溯证据。日后如需释放磁盘空间，只能在用户明确确认后单独处理 Python 缓存、`.idea/`、生成的标签缓存或重复的派生文件；原始图片/标签和历史运行目录不自动删除。

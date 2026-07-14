@@ -84,3 +84,19 @@ PY
 ```
 
 结果：`trainDataV3_images=159`、`hard_images=292`、`exact_sha256_overlap=0`。该检查只证明无字节级重复，不代替近重复或使用时序审计。
+
+## 2026-07-14：统计语义、八组合消融与场景初标
+
+```bash
+conda run -n yolo env PYTHONPATH=ultralytics-main python tools/run_semantic_diagnostics.py --device 3 --brightness-images 24
+conda run -n yolo python tools/build_hard_case_annotation_sheets.py
+conda run -n yolo python tools/write_initial_hard_case_labels.py
+conda run -n yolo env PYTHONPATH=ultralytics-main python tools/train_factorial_ablation.py \
+  --combination <var|rec|bri|var_rec|var_bri|rec_bri> --mode smoke --device <0|2|3>
+conda run -n yolo env PYTHONPATH=ultralytics-main python tools/train_factorial_ablation.py \
+  --combination <var|rec|bri|var_rec|var_bri|rec_bri> --mode full --device <0|2|3>
+conda run -n yolo env PYTHONPATH=ultralytics-main python tools/evaluate_factorial_ablation.py --device 3 --seed 42
+conda run -n yolo env PYTHONPATH=ultralytics-main python tools/evaluate_hard_case_groups.py --device 3 --seed 42
+```
+
+六个缺失组合均先通过 1 epoch smoke，再独立完成最长 200 epoch、patience=20 的训练；ECA 与 Full 使用此前同协议 seed=42 权重。八组仅在训练完成后统一评估 Hard Test。146 张场景初标只查看原图联系表，不读取逐图模型预测；图片联系表和逐图统计均只保存在 ignored artifacts。

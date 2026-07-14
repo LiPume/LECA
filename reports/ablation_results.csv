@@ -1,1 +1,9 @@
-configuration,seed,precision,recall,map50,map50_95,best_epoch,params,flops,status,notes
+configuration,seed,precision,recall,map50,map50_95,best_epoch_zero_based,params,flops_g,status,notes
+eca,42,0.908210,0.893697,0.957343,0.583052,68,2624116,6.3,Observed,独立重训练；Hard Test；无统计分支
+var,42,0.940539,0.851613,0.946994,0.605738,54,2624124,6.3,Observed,独立重训练；ECA+Var
+rec,42,0.962805,0.835015,0.952781,0.590307,42,2624124,6.3,Observed,独立重训练；ECA+Rec
+bri,42,0.958016,0.736082,0.875131,0.514091,21,2624124,6.3,Observed,独立重训练；ECA+Bri
+var_rec,42,0.977005,0.822350,0.926945,0.628586,52,2624132,6.3,Observed,独立重训练；ECA+Var+Rec
+var_bri,42,0.894871,0.832258,0.932127,0.543872,32,2624132,6.3,Observed,独立重训练；ECA+Var+Bri
+rec_bri,42,0.974979,0.754195,0.884524,0.605369,29,2624132,6.3,Observed,独立重训练；ECA+Rec+Bri
+full,42,0.974220,0.922581,0.979572,0.614027,42,2624140,6.3,Observed,独立重训练；完整 LECA

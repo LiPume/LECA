@@ -35,6 +35,12 @@ from ultralytics.nn.modules import (
     C3k2Baseline,
     C3k2ECA,
     C3k2LECA,
+    C3k2LECAVar,
+    C3k2LECARec,
+    C3k2LECABri,
+    C3k2LECAVarRec,
+    C3k2LECAVarBri,
+    C3k2LECARecBri,
     C2fAttn,
     C2fCIB,
     C2fPSA,
@@ -1601,6 +1607,12 @@ def parse_model(d, ch, verbose=True):
             C3k2Baseline,
             C3k2ECA,
             C3k2LECA,
+            C3k2LECAVar,
+            C3k2LECARec,
+            C3k2LECABri,
+            C3k2LECAVarRec,
+            C3k2LECAVarBri,
+            C3k2LECARecBri,
             RepNCSPELAN4,
             ELAN1,
             ADown,
@@ -1630,6 +1642,12 @@ def parse_model(d, ch, verbose=True):
             C3k2Baseline,
             C3k2ECA,
             C3k2LECA,
+            C3k2LECAVar,
+            C3k2LECARec,
+            C3k2LECABri,
+            C3k2LECAVarRec,
+            C3k2LECAVarBri,
+            C3k2LECARecBri,
             C2fAttn,
             C3,
             C3TR,
@@ -1675,7 +1693,8 @@ def parse_model(d, ch, verbose=True):
             if m in repeat_modules:
                 args.insert(2, n)  # number of repeats
                 n = 1
-            if m in (C3k2, C3k2Baseline, C3k2ECA, C3k2LECA):  # preserve YOLO11 detection-head behavior
+            if m in (C3k2, C3k2Baseline, C3k2ECA, C3k2LECA, C3k2LECAVar, C3k2LECARec,
+                     C3k2LECABri, C3k2LECAVarRec, C3k2LECAVarBri, C3k2LECARecBri):  # preserve YOLO11 detection-head behavior
                 legacy = False
                 if scale in "mlx":
                     args[3] = True

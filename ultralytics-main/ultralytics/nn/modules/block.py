@@ -26,6 +26,12 @@ __all__ = (
     "C3k2Baseline",
     "C3k2ECA",
     "C3k2LECA",
+    "C3k2LECAVar",
+    "C3k2LECARec",
+    "C3k2LECABri",
+    "C3k2LECAVarRec",
+    "C3k2LECAVarBri",
+    "C3k2LECARecBri",
     "C2fAttn",
     "ImagePoolingAttn",
     "ContrastiveHead",
@@ -1161,6 +1167,73 @@ class C3k2LECA(C3k2):
     def __init__(self, c1: int, c2: int, n: int = 1, c3k: bool = False, e: float = 0.5, g: int = 1, shortcut: bool = True):
         super().__init__(c1, c2, n, c3k, e, g, shortcut)
         self.eca = LECA(c2)
+
+
+class FactorialLECA(nn.Module):
+    """受控重训练消融模块：保留 ECA，只实例化指定统计分支，不修改论文 LECA。"""
+
+    def __init__(self, channels: int, branches: str):
+        super().__init__()
+        self.branches = frozenset(branches.split("+"))
+        t = int(abs((torch.log2(torch.tensor(float(channels))) + 1) / 2))
+        k = t if t % 2 else t + 1
+        self.avg_pool = nn.AdaptiveAvgPool2d(1)
+        self.conv = nn.Conv1d(1, 1, kernel_size=k, padding=(k - 1) // 2, bias=False)
+        self.sigmoid = nn.Sigmoid()
+        if "var" in self.branches:
+            self.beta = nn.Parameter(torch.tensor(0.04))
+        if "rec" in self.branches:
+            self.alpha = nn.Parameter(torch.tensor(0.02))
+        if "bri" in self.branches:
+            self.gamma = nn.Parameter(torch.tensor(0.01))
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        y = self.avg_pool(x).squeeze(-1).transpose(-1, -2)
+        weight = self.sigmoid(self.conv(y).transpose(-1, -2).unsqueeze(-1))
+        mean = None
+        if "var" in self.branches:
+            mean = x.mean(dim=(2, 3), keepdim=True)
+            variance = (x * x).mean(dim=(2, 3), keepdim=True) - mean * mean
+            weight = weight / (1 + self.beta * F.softplus(variance))
+        if "rec" in self.branches:
+            mean = mean if mean is not None else x.mean(dim=(2, 3), keepdim=True)
+            weight = weight * (1 + self.alpha * torch.sigmoid(-mean))
+        if "bri" in self.branches:
+            corr = torch.sigmoid(-x.mean(dim=1, keepdim=True)).mean(dim=(2, 3), keepdim=True)
+            weight = weight * (1 + self.gamma * corr)
+        return x * weight
+
+
+class _C3k2Factorial(C3k2):
+    branches = ""
+
+    def __init__(self, c1: int, c2: int, n: int = 1, c3k: bool = False, e: float = 0.5, g: int = 1, shortcut: bool = True):
+        super().__init__(c1, c2, n, c3k, e, g, shortcut)
+        self.eca = FactorialLECA(c2, self.branches)
+
+
+class C3k2LECAVar(_C3k2Factorial):
+    branches = "var"
+
+
+class C3k2LECARec(_C3k2Factorial):
+    branches = "rec"
+
+
+class C3k2LECABri(_C3k2Factorial):
+    branches = "bri"
+
+
+class C3k2LECAVarRec(_C3k2Factorial):
+    branches = "var+rec"
+
+
+class C3k2LECAVarBri(_C3k2Factorial):
+    branches = "var+bri"
+
+
+class C3k2LECARecBri(_C3k2Factorial):
+    branches = "rec+bri"
 
 
 class C3k(C3):

@@ -125,3 +125,19 @@ conda run -n yolo python tools/evaluate_hard_branch_neutralization.py --device 0
 使用 Full LECA seed=42 最优权重遍历全部 146 张 Hard Test，只保存逐层聚合统计，不保存原始逐通道特征。首次汇总得到 147 次 `corr/w_bri`，定位为 Ultralytics 首次前向的 dummy warm-up 被 hook 捕获；该异常未静默忽略。脚本改为先完成模型 warm-up、再注册 hooks，重新生成后逐层计数均严格为 146。
 
 输出为 `reports/leca_layer_factor_summary_seed42.csv` 和 `reports/hard_branch_neutralization_seed42.csv`。逐层曲线保存在 ignored 的 `artifacts/visualizations/leca_layer_factors/`；中性化评估输出保存在 ignored 的 `runs_repro/mechanism_diagnostics/`。中性化只在内存中将 beta/alpha/gamma 置零，未覆盖权重文件，也不替代独立重训练消融。
+
+## 2026-07-15：答辩稿 YOLO11 结构核验
+
+```bash
+# 以 1×3×640×640 零张量只读前向，对关键层注册临时 shape hooks
+conda run --no-capture-output -n yolo python - <<'PY'
+# 构建 configs/yolo11_audit_leca.yaml，打印 2/4/6/8/10/13/16/19/22/23 层输出
+PY
+
+# 读取已训练 checkpoint 的 Detect 配置
+conda run --no-capture-output -n yolo python - <<'PY'
+# 打印 nc、reg_max、stride 和三尺度输入通道
+PY
+```
+
+确认最终 Detect 输入为第 16/19/22 层，形状分别为 `64×80×80`、`128×40×40`、`256×20×20`，合计 8400 个预测位置；已训练权重为单类别、`reg_max=16`、stride=8/16/32。该检查没有训练、保存权重或修改模型状态。

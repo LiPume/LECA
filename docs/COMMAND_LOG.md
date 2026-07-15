@@ -113,3 +113,15 @@ conda run -n yolo python tools/evaluate_placement_ablation.py --device 0 --seed 
 ```
 
 三组中间配置均通过 1 epoch smoke 后独立训练，Hard Test 仅在全部训练完成后统一评估。Full 8 处四项指标最高；小型汇总写入 `reports/placement_ablation_results.csv`，权重、训练图和评估图保存在 ignored `runs_repro/`。
+
+## 2026-07-15：逐层实际因子与分支中性化
+
+```bash
+conda run -n yolo python tools/summarize_leca_layer_factors.py --device 0
+conda run -n yolo python tools/plot_leca_layer_factors.py
+conda run -n yolo python tools/evaluate_hard_branch_neutralization.py --device 0
+```
+
+使用 Full LECA seed=42 最优权重遍历全部 146 张 Hard Test，只保存逐层聚合统计，不保存原始逐通道特征。首次汇总得到 147 次 `corr/w_bri`，定位为 Ultralytics 首次前向的 dummy warm-up 被 hook 捕获；该异常未静默忽略。脚本改为先完成模型 warm-up、再注册 hooks，重新生成后逐层计数均严格为 146。
+
+输出为 `reports/leca_layer_factor_summary_seed42.csv` 和 `reports/hard_branch_neutralization_seed42.csv`。逐层曲线保存在 ignored 的 `artifacts/visualizations/leca_layer_factors/`；中性化评估输出保存在 ignored 的 `runs_repro/mechanism_diagnostics/`。中性化只在内存中将 beta/alpha/gamma 置零，未覆盖权重文件，也不替代独立重训练消融。

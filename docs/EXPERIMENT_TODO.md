@@ -33,7 +33,9 @@
 - [ ] H3：按低照度/正常样本及 TP/FP/FN 比较 `mu`、`w_rec`；推理时 alpha=0 只作为诊断。
 - [ ] H4：关联 `corr` 与图像灰度均值，并比较不同深度及空间不均匀样本；不得将其直接称为物理亮度。
 - [~] 已建立 146 张 `metadata/hard_case_index.csv` AI 单人原图初标并完成分组指标；仍需现场人员复核，且连续场景数不足。
-- [ ] 输出 alpha/beta/gamma 分层曲线、权重分布、TP/FP/FN 分布和分支关闭预测对比；图片仅保存本地。
+- [x] 已在 146 张 Hard Test 上汇总 8 层 alpha/beta/gamma、`w_sup/w_rec/w_bri/w_stat/w_final` 的均值、分位数与极值，并输出本地逐层曲线。
+- [x] 已对同一收敛 Full 模型执行 Var/Rec/Bri 推理中性化，明确标为局部敏感性而非重训练消融。
+- [ ] 补充 TP/FP/FN 分布和分支关闭逐图预测对比；图片仅保存本地。
 
 ## P3：Controlled Stress Tests
 

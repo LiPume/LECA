@@ -1,0 +1,5 @@
+condition,neutralized_scalar,seed,precision,recall,map50,map50_95,status
+full,none,42,0.9742197451718728,0.9225806451612903,0.9795719610284713,0.6140274233899586,inference_sensitivity_not_independent_retraining
+var_off,beta,42,0.9912743967707125,0.9290322580645162,0.9830469805213666,0.6081507072561015,inference_sensitivity_not_independent_retraining
+rec_off,alpha,42,0.9730190320714159,0.930670476191715,0.9802527109462777,0.611938987977728,inference_sensitivity_not_independent_retraining
+bri_off,gamma,42,0.9728462950267894,0.9245870880690831,0.9804146261235686,0.6124847313172987,inference_sensitivity_not_independent_retraining

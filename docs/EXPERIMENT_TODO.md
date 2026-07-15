@@ -35,7 +35,7 @@
 - [~] 已建立 146 张 `metadata/hard_case_index.csv` AI 单人原图初标并完成分组指标；仍需现场人员复核，且连续场景数不足。
 - [x] 已在 146 张 Hard Test 上汇总 8 层 alpha/beta/gamma、`w_sup/w_rec/w_bri/w_stat/w_final` 的均值、分位数与极值，并输出本地逐层曲线。
 - [x] 已对同一收敛 Full 模型执行 Var/Rec/Bri 推理中性化，明确标为局部敏感性而非重训练消融。
-- [x] 已对三个预选答辩案例输出 P3/P4/P5 全通道 RMS 响应全图与真实框局部图；未按视觉效果挑选通道，图片仅保存在本地。
+- [x] 已对三个预选答辩案例输出 P3/P4/P5 平滑全通道响应、尺度分类 Grad-CAM 和原始通道值面板；低分尺度不放大噪声，图片仅保存在本地。
 - [ ] 补充 TP/FP/FN 分布和分支关闭逐图预测对比；图片仅保存本地。
 
 ## P3：Controlled Stress Tests

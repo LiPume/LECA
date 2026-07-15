@@ -1,0 +1,10 @@
+image_id,level,layer,stride,channels,grid_h,grid_w,top_scale_class_score,top_cell_y,top_cell_x,cam_target,status
+0098_c7fc27a4.jpg,P3,16,8,64,80,80,0.6415278315544128,51,33,maximum_raw_class_probability_within_each_scale,descriptive_gradcam_not_causal_proof
+0098_c7fc27a4.jpg,P4,19,16,128,40,40,0.0006959474412724376,10,24,maximum_raw_class_probability_within_each_scale,descriptive_gradcam_not_causal_proof
+0098_c7fc27a4.jpg,P5,22,32,256,20,20,0.0016703654546290636,9,18,maximum_raw_class_probability_within_each_scale,descriptive_gradcam_not_causal_proof
+0061_74dea2c9.jpg,P3,16,8,64,80,80,0.9435216784477234,43,35,maximum_raw_class_probability_within_each_scale,descriptive_gradcam_not_causal_proof
+0061_74dea2c9.jpg,P4,19,16,128,40,40,0.000570541073102504,38,37,maximum_raw_class_probability_within_each_scale,descriptive_gradcam_not_causal_proof
+0061_74dea2c9.jpg,P5,22,32,256,20,20,0.001601460506208241,19,19,maximum_raw_class_probability_within_each_scale,descriptive_gradcam_not_causal_proof
+0010_47f223ba.jpg,P3,16,8,64,80,80,0.8746011257171631,40,15,maximum_raw_class_probability_within_each_scale,descriptive_gradcam_not_causal_proof
+0010_47f223ba.jpg,P4,19,16,128,40,40,0.001971558667719364,12,2,maximum_raw_class_probability_within_each_scale,descriptive_gradcam_not_causal_proof
+0010_47f223ba.jpg,P5,22,32,256,20,20,0.0015814609359949827,19,19,maximum_raw_class_probability_within_each_scale,descriptive_gradcam_not_causal_proof

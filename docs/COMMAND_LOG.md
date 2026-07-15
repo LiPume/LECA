@@ -149,3 +149,11 @@ conda run --no-capture-output -n yolo python tools/visualize_pyramid_features.py
 ```
 
 对事先已选为检出增益、误检减少和仍有局限的 `0098/0061/0010` 三个案例，捕获已训练 Full LECA 第 16/19/22 层的实际输出。所有层统一使用全通道 RMS 聚合，不按视觉效果挑选通道；使用 `rect=False` 固定 640 square-letterbox，去除 padding 后映射回原图。图片保存至 ignored 的 `artifacts/visualizations/pyramid_features/`，仅提交生成脚本和不含图像内容的汇总 CSV。
+
+首次尝试分类 Grad-CAM 时，PyTorch 报错 `Invalid device string: '0'`。该错误未绕过；只在新可视化脚本中将数字设备参数显式解析为 `cuda:0`，随后重新运行：
+
+```bash
+conda run --no-capture-output -n yolo python tools/visualize_pyramid_gradcam.py --device 0
+```
+
+新版图片保存至 ignored 的 `artifacts/visualizations/pyramid_explainable/`：上排使用双线性/三次插值显示全通道 RMS 响应，下排从每个尺度最高原始分类分数反向传播 Grad-CAM。低于 `.01` 的尺度明确标为未形成有效候选，不对微小梯度噪声强行归一化。另输出去除 letterbox padding 的原始通道值面板，通道按有效区域空间标准差固定选 Top-6，而非人工挑图。

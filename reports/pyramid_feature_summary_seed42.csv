@@ -1,0 +1,10 @@
+image_id,level,layer,stride,channels,grid_h,grid_w,gt_focus_ratio,aggregation,status
+0098_c7fc27a4.jpg,P3,model.16,8,64,80,80,1.4747794422468787,sqrt(mean_channel(feature_squared)),three_preselected_cases_descriptive_not_population_inference
+0098_c7fc27a4.jpg,P4,model.19,16,128,40,40,1.616998987996454,sqrt(mean_channel(feature_squared)),three_preselected_cases_descriptive_not_population_inference
+0098_c7fc27a4.jpg,P5,model.22,32,256,20,20,0.9549383743287726,sqrt(mean_channel(feature_squared)),three_preselected_cases_descriptive_not_population_inference
+0061_74dea2c9.jpg,P3,model.16,8,64,80,80,1.2841735875394145,sqrt(mean_channel(feature_squared)),three_preselected_cases_descriptive_not_population_inference
+0061_74dea2c9.jpg,P4,model.19,16,128,40,40,1.6901851215298818,sqrt(mean_channel(feature_squared)),three_preselected_cases_descriptive_not_population_inference
+0061_74dea2c9.jpg,P5,model.22,32,256,20,20,0.9841986535811004,sqrt(mean_channel(feature_squared)),three_preselected_cases_descriptive_not_population_inference
+0010_47f223ba.jpg,P3,model.16,8,64,80,80,1.1422822411108549,sqrt(mean_channel(feature_squared)),three_preselected_cases_descriptive_not_population_inference
+0010_47f223ba.jpg,P4,model.19,16,128,40,40,1.253585770556289,sqrt(mean_channel(feature_squared)),three_preselected_cases_descriptive_not_population_inference
+0010_47f223ba.jpg,P5,model.22,32,256,20,20,1.033769271239841,sqrt(mean_channel(feature_squared)),three_preselected_cases_descriptive_not_population_inference

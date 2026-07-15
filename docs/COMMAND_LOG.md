@@ -141,3 +141,11 @@ PY
 ```
 
 确认最终 Detect 输入为第 16/19/22 层，形状分别为 `64×80×80`、`128×40×40`、`256×20×20`，合计 8400 个预测位置；已训练权重为单类别、`reg_max=16`、stride=8/16/32。该检查没有训练、保存权重或修改模型状态。
+
+## 2026-07-15：P3/P4/P5 代表样本可视化
+
+```bash
+conda run --no-capture-output -n yolo python tools/visualize_pyramid_features.py --device 0
+```
+
+对事先已选为检出增益、误检减少和仍有局限的 `0098/0061/0010` 三个案例，捕获已训练 Full LECA 第 16/19/22 层的实际输出。所有层统一使用全通道 RMS 聚合，不按视觉效果挑选通道；使用 `rect=False` 固定 640 square-letterbox，去除 padding 后映射回原图。图片保存至 ignored 的 `artifacts/visualizations/pyramid_features/`，仅提交生成脚本和不含图像内容的汇总 CSV。

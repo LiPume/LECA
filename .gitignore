@@ -27,6 +27,7 @@ conda-meta/
 
 # Local datasets and source annotations (not versioned)
 data/
+!/ultralytics-main/ultralytics/data/
 dataset/
 datasets/
 images/
